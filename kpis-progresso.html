@@ -119,7 +119,6 @@
 </style>
 <script>
 if(sessionStorage.getItem("suri_auth")!=="ok"){
-  sessionStorage.setItem("suri_return", location.pathname);
   location.replace("login.html");
 }
 </script>
@@ -141,6 +140,7 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
 
   <div class="kpi-tabs" id="kpiTabs">
     <button class="kpi-tab active" data-kpi="ticket"><span class="dot"></span>Ticket Médio</button>
+    <button class="kpi-tab" data-kpi="conversao"><span class="dot"></span>% Conversão</button>
     <button class="kpi-tab" data-kpi="ciclovenda"><span class="dot"></span>Ciclo de Venda</button>
     <button class="kpi-tab" data-kpi="ciclolost"><span class="dot"></span>Ciclo de Lost</button>
     <button class="kpi-tab pending" data-kpi="desconto"><span class="dot"></span>% de Desconto</button>
@@ -189,6 +189,70 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
 /* ===================== DADOS ===================== */
 
 /* Ticket Médio — direto da coluna TICKET das planilhas mensais Suri Champions (Jan-Mai/2026) */
+/* Receita total por closer/mês — planilhas Suri Champions (Jan-Mai/2026), validado contra xlsx */
+const RECEITA = {
+  "Brena Carvalho":      {jan:14944.85, fev:2246.00,  mar:8356.50,  abr:11675.50, mai:5154.50},
+  "Emerson Rocha":       {jan:6655.50,  fev:17411.25, mar:13937.25, abr:13543.50, mai:3667.50},
+  "Clailton Nascimento": {jan:21754.50, fev:19951.50, mar:12043.39, abr:2790.00,  mai:11490.00},
+  "Lucas Machado":       {jan:31600.04, fev:11446.90, mar:14034.25, abr:10788.00, mai:5626.50},
+  "João Victor":         {jan:14928.50, fev:13733.00, mar:11292.00, abr:3466.50,  mai:13982.00},
+  "Alex Uchôa":          {jan:13932.50, fev:12648.60, mar:7065.00,  abr:8235.00,  mai:14931.20},
+  "André Queiroz":       {jan:14735.80, fev:12604.95, mar:16461.30, abr:14395.50, mai:4501.75},
+  "Rafael Lima":         {jan:11376.00, fev:11066.75, mar:14583.25, abr:10019.50, mai:19807.00},
+  "Jéssika Lima":        {jan:8122.50,  fev:7869.00,  mar:13580.25, abr:4702.50,  mai:9751.50},
+  "Patrício Felix":      {jan:16819.50, fev:8196.00,  mar:9567.00,  abr:14258.60, mai:14431.50},
+  "Jossiane":            {jan:13938.78, fev:7227.00,  mar:15623.50, abr:7733.00,  mai:8679.00},
+  "Júnior Furtado":      {jan:null,     fev:null,     mar:null,     abr:null,     mai:4967.00},
+};
+
+/* Vendas (negócios ganhos) por closer/mês — mesma fonte */
+const VENDAS = {
+  "Brena Carvalho":      {jan:14, fev:3,  mar:7,  abr:13, mai:5},
+  "Emerson Rocha":       {jan:5,  fev:14, mar:13, abr:8,  mai:3},
+  "Clailton Nascimento": {jan:15, fev:14, mar:11, abr:4,  mai:11},
+  "Lucas Machado":       {jan:13, fev:13, mar:21, abr:11, mai:7},
+  "João Victor":         {jan:14, fev:18, mar:15, abr:5,  mai:18},
+  "Alex Uchôa":          {jan:13, fev:11, mar:9,  abr:7,  mai:10},
+  "André Queiroz":       {jan:13, fev:19, mar:20, abr:10, mai:8},
+  "Rafael Lima":         {jan:16, fev:13, mar:16, abr:15, mai:21},
+  "Jéssika Lima":        {jan:10, fev:9,  mar:12, abr:6,  mai:8},
+  "Patrício Felix":      {jan:14, fev:9,  mar:12, abr:17, mai:16},
+  "Jossiane":            {jan:13, fev:4,  mar:11, abr:6,  mai:6},
+  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:7},
+};
+
+/* Conversão (Vendas ÷ Reuniões × 100) — coluna H das planilhas Champions, Jan-Mai/2026 */
+const CONVERSAO = {
+  "Brena Carvalho":      {jan:31.8, fev:10.0, mar:18.4, abr:25.0, mai:12.8},
+  "Emerson Rocha":       {jan:11.4, fev:43.8, mar:36.1, abr:19.5, mai:6.5},
+  "Clailton Nascimento": {jan:30.0, fev:35.0, mar:27.5, abr:8.5,  mai:20.4},
+  "Lucas Machado":       {jan:25.0, fev:31.7, mar:37.5, abr:22.0, mai:12.3},
+  "João Victor":         {jan:28.6, fev:29.0, mar:35.7, abr:9.6,  mai:36.7},
+  "Alex Uchôa":          {jan:19.1, fev:22.0, mar:20.5, abr:12.3, mai:15.4},
+  "André Queiroz":       {jan:25.0, fev:33.3, mar:37.7, abr:19.6, mai:18.2},
+  "Rafael Lima":         {jan:18.8, fev:22.8, mar:27.1, abr:22.4, mai:29.6},
+  "Jéssika Lima":        {jan:15.6, fev:30.0, mar:32.4, abr:14.6, mai:17.4},
+  "Patrício Felix":      {jan:25.5, fev:21.4, mar:27.9, abr:29.8, mai:27.1},
+  "Jossiane":            {jan:31.7, fev:8.5,  mar:23.9, abr:11.8, mai:20.7},
+  "Júnior Furtado":      {jan:null, fev:null, mar:null, abr:null, mai:25.9},
+};
+
+/* Reuniões por closer/mês — mesma fonte */
+const REUNIOES = {
+  "Brena Carvalho":      {jan:44, fev:30, mar:38, abr:52, mai:39},
+  "Emerson Rocha":       {jan:44, fev:32, mar:36, abr:41, mai:46},
+  "Clailton Nascimento": {jan:50, fev:40, mar:40, abr:47, mai:54},
+  "Lucas Machado":       {jan:52, fev:41, mar:56, abr:50, mai:57},
+  "João Victor":         {jan:49, fev:62, mar:42, abr:52, mai:49},
+  "Alex Uchôa":          {jan:68, fev:50, mar:44, abr:57, mai:65},
+  "André Queiroz":       {jan:52, fev:57, mar:53, abr:51, mai:44},
+  "Rafael Lima":         {jan:85, fev:57, mar:59, abr:67, mai:71},
+  "Jéssika Lima":        {jan:64, fev:30, mar:37, abr:41, mai:46},
+  "Patrício Felix":      {jan:55, fev:42, mar:43, abr:57, mai:59},
+  "Jossiane":            {jan:41, fev:47, mar:46, abr:51, mai:29},
+  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:27},
+};
+
 const TICKET = {
   "Brena Carvalho":      {jan:1067.49, fev:748.67,  mar:1193.79, abr:898.12,  mai:1030.90},
   "Emerson Rocha":       {jan:1331.10, fev:1243.66, mar:1072.10, abr:1692.94, mai:1222.50},
@@ -255,6 +319,8 @@ const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai
 const MONTH_SHORT  = {jan:"Jan",fev:"Fev",mar:"Mar",abr:"Abr",mai:"Mai"};
 const MONTH_KEYS   = ["jan","fev","mar","abr","mai"];
 
+function fmtBRL(v){return v==null?"—":"R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
+
 /* ===================== CONFIG POR KPI ===================== */
 const KPI_CONFIG = {
   ticket: {
@@ -267,6 +333,17 @@ const KPI_CONFIG = {
     projFmt: v => "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}),
     legend: ["≥115% da média","90–115%","70–90%","<70%"],
     trendThreshold: 8, // % do valor atual
+  },
+  conversao: {
+    data: CONVERSAO,
+    label: "% Conversão",
+    higherBetter: true,
+    fmt: v => v==null ? "—" : v.toFixed(1).replace(".",",")+"%",
+    fmtAvg: v => v==null ? "—" : v.toFixed(1).replace(".",",")+"%",
+    slopeLabel: v => (v>=0?"+":"")+v.toFixed(1).replace(".",",")+"%",
+    projFmt: v => Math.max(0,v).toFixed(1).replace(".",",")+"%",
+    legend: ["≥115% da média","90–115%","70–90%","<70%"],
+    trendThreshold: 5, // 5 p.p. de variação para considerar tendência
   },
   ciclovenda: {
     data: CICLO_VENDA,
@@ -497,6 +574,7 @@ function renderAll(){
   renderLegend(currentKpi);
 
   let list=CLOSERS.filter(c=>currentTeam==="all"||c.time===currentTeam);
+  const monthList = list; // reference for tooltip ranking (uses all team members, not just filtered by search)
   if(closerQuery.trim()!==""){
     const q=normalize(closerQuery.trim());
     list=list.filter(c=>normalize(c.nome).includes(q));
@@ -539,7 +617,37 @@ function renderAll(){
       const v=cfg.data[c.nome]?.[mk]??null;
       const avg=avgs[mk];
       const ratio=(v!=null&&avg)?( (v/avg)*100 ):null;
-      const title=v==null?"Sem dado":`${cfg.label}: ${cfg.fmt(v)} · Média do time: ${cfg.fmtAvg(avg)}`;
+      // Rich tooltip: explain the "why" behind each value
+      let title;
+      if(v==null){
+        title = "Sem dado neste mês";
+      } else if(currentKpi==="ticket"){
+        const rec = RECEITA[c.nome]?.[mk];
+        const vnd = VENDAS[c.nome]?.[mk];
+        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[b.nome][mk]-cfg.data[a.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        title = `Ticket: ${cfg.fmt(v)}\nReceita: ${fmtBRL(rec)} ÷ ${vnd} vendas\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking no mês: ${pos}º de ${total}`;
+      } else if(currentKpi==="conversao"){
+        const vnd = VENDAS[c.nome]?.[mk];
+        const reu = REUNIOES[c.nome]?.[mk];
+        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[b.nome][mk]-cfg.data[a.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        title = `Conversão: ${cfg.fmt(v)}\n${vnd} vendas ÷ ${reu} reuniões\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking no mês: ${pos}º de ${total}`;
+      } else if(currentKpi==="ciclovenda"){
+        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[a.nome][mk]-cfg.data[b.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        const diff = avg ? v - avg : null;
+        const diffStr = diff==null ? "" : (diff>0 ? ` (+${Math.round(diff)} dias acima da média)` : ` (${Math.round(diff)} dias abaixo da média)`);
+        title = `Ciclo de Venda: ${v} dias${diffStr}\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking (menor=melhor): ${pos}º de ${total}`;
+      } else if(currentKpi==="ciclolost"){
+        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[a.nome][mk]-cfg.data[b.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        const diff = avg ? v - avg : null;
+        const diffStr = diff==null ? "" : (diff>0 ? ` (+${Math.round(diff)} dias acima da média)` : ` (${Math.round(diff)} dias abaixo da média)`);
+        title = `Ciclo de Lost: ${v} dias${diffStr}\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking (menor=melhor): ${pos}º de ${total}`;
+      } else {
+        title = `${cfg.label}: ${cfg.fmt(v)} · Média do time: ${cfg.fmtAvg(avg)}`;
+      }
       return `<td><span class="val-cell ${heatClass(ratio,cfg.higherBetter)}" title="${title}">${cfg.fmt(v)}</span></td>`;
     }).join("");
 
