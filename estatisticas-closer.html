@@ -131,6 +131,7 @@
 
   <div class="period-row">
     <div class="period-toggle" id="periodToggle">
+      <button class="period-btn" data-period="mespassado">Mês Passado</button>
       <button class="period-btn" data-period="mes">Este Mês</button>
       <button class="period-btn active" data-period="trimestre">Este Trimestre</button>
       <button class="period-btn" data-period="ano">Este Ano</button>
@@ -215,18 +216,18 @@ const LOST_CYCLE_DATA = {"Rafael Lima": [["2026-06-19", 0.88, "De 10 a 49 funcio
    Fonte: gráfico "Ciclo de Ganho" do Pipedrive filtrado por mês, funil Vendas, status Ganho.
    null = closer não teve negócio ganho naquele mês. */
 const CICLO_VENDA = {
-  "Brena Carvalho":      { jan:4,    fev:null, mar:9,    abr:4,  mai:18,   jun:null },
-  "Emerson Rocha":       { jan:12,   fev:19,   mar:10,   abr:7,  mai:null, jun:null },
-  "Clailton Nascimento": { jan:4,    fev:4,    mar:5,    abr:2,  mai:6,    jun:null },
-  "Lucas Machado":       { jan:13,   fev:9,    mar:4,    abr:6,  mai:6,    jun:null },
-  "João Victor":         { jan:5,    fev:5,    mar:6,    abr:6,  mai:4,    jun:null },
-  "Alex Uchôa":          { jan:8,    fev:18,   mar:5,    abr:3,  mai:3,    jun:null },
-  "André Queiroz":       { jan:19,   fev:7,    mar:11,   abr:11, mai:8,    jun:null },
-  "Rafael Lima":         { jan:2,    fev:14,   mar:7,    abr:10, mai:11,   jun:null },
-  "Jéssika Lima":        { jan:9,    fev:17,   mar:5,    abr:6,  mai:21,   jun:null },
-  "Patrício Felix":      { jan:5,    fev:11,   mar:24,   abr:6,  mai:5,    jun:null },
-  "Jossiane":            { jan:8,    fev:7,    mar:20,   abr:5,  mai:5,    jun:null },
-  "Júnior Furtado":      { jan:null, fev:null, mar:null, abr:null, mai:6,  jun:null },
+  "Brena Carvalho":      { jan:4,    fev:null, mar:9,    abr:4,  mai:18,   jun:7 },
+  "Emerson Rocha":       { jan:12,   fev:19,   mar:10,   abr:7,  mai:null, jun:23 },
+  "Clailton Nascimento": { jan:4,    fev:4,    mar:5,    abr:2,  mai:6,    jun:4 },
+  "Lucas Machado":       { jan:13,   fev:9,    mar:4,    abr:6,  mai:6,    jun:16 },
+  "João Victor":         { jan:5,    fev:5,    mar:6,    abr:6,  mai:4,    jun:5 },
+  "Alex Uchôa":          { jan:8,    fev:18,   mar:5,    abr:3,  mai:3,    jun:8 },
+  "André Queiroz":       { jan:19,   fev:7,    mar:11,   abr:11, mai:8,    jun:10 },
+  "Rafael Lima":         { jan:2,    fev:14,   mar:7,    abr:10, mai:11,   jun:6 },
+  "Jéssika Lima":        { jan:9,    fev:17,   mar:5,    abr:6,  mai:21,   jun:5 },
+  "Patrício Felix":      { jan:5,    fev:11,   mar:24,   abr:6,  mai:5,    jun:11 },
+  "Jossiane":            { jan:8,    fev:7,    mar:20,   abr:5,  mai:5,    jun:6 },
+  "Júnior Furtado":      { jan:null, fev:null, mar:null, abr:null, mai:6,  jun:7 },
 };
 
 const SIZE_OPTIONS = ["De 1 a 2 funcionários","Até 4 funcionários","De 3 a 5 funcionários","De 5 a 7 funcionários","De 6 a 9 funcionários","De 8 a 9 funcionários","De 10 a 49 funcionários","De 50 a 99 funcionários","Mais de 100 funcionários","Não informado"];
@@ -242,6 +243,7 @@ const TODAY = new Date(); // sempre a data real do dia em que o painel é aberto
 function ticketMonthKeys(period){
   // mapeia o período de calendário pra quais chaves jan..dez consultar na tabela de Ticket Médio
   const m = TODAY.getMonth(); // 0-11
+  if(period==="mespassado") return [MONTH_KEY_BY_INDEX[m===0?11:m-1]];
   if(period==="mes") return [MONTH_KEY_BY_INDEX[m]];
   if(period==="trimestre"){
     const qStart = Math.floor(m/3)*3;
@@ -251,6 +253,11 @@ function ticketMonthKeys(period){
   return MONTH_KEY_BY_INDEX.slice(0, m+1);
 }
 function dateInPeriod(dateObj, period){
+  if(period==="mespassado"){
+    const prevM = TODAY.getMonth()===0?11:TODAY.getMonth()-1;
+    const prevY = TODAY.getMonth()===0?TODAY.getFullYear()-1:TODAY.getFullYear();
+    return dateObj.getFullYear()===prevY && dateObj.getMonth()===prevM;
+  }
   if(dateObj.getFullYear() !== TODAY.getFullYear()) return false;
   if(period==="mes") return dateObj.getMonth()===TODAY.getMonth();
   if(period==="trimestre") return Math.floor(dateObj.getMonth()/3)===Math.floor(TODAY.getMonth()/3);
@@ -258,6 +265,11 @@ function dateInPeriod(dateObj, period){
 }
 function periodRangeLabel(period){
   const m = TODAY.getMonth(), y = TODAY.getFullYear();
+  if(period==="mespassado"){
+    const prevM = m===0?11:m-1;
+    const prevY = m===0?y-1:y;
+    return MONTH_NAME_BY_INDEX[prevM]+"/"+prevY;
+  }
   if(period==="mes") return MONTH_NAME_BY_INDEX[m]+"/"+y;
   if(period==="trimestre"){
     const qStart = Math.floor(m/3)*3;
