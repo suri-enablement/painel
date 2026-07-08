@@ -113,12 +113,6 @@
 
   @media (max-width:900px){ body{padding:20px;} }
 </style>
-<script>
-if(sessionStorage.getItem("suri_auth")!=="ok"){
-  sessionStorage.setItem("suri_return", location.pathname);
-  location.replace("login.html");
-}
-</script>
 </head>
 <body>
 <div class="page">
@@ -132,7 +126,7 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
         <p>Ticket médio, % de desconto, Opp&gt;Won e ciclos de venda/perda por closer</p>
       </div>
     </div>
-    <a class="back-link" href="portal-closers.html">← Closers</a>
+    <a class="back-link" href="index.html">← Painéis</a>
   </div>
 
   <div class="period-row">
@@ -194,18 +188,18 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
 <script>
 /* ===================== TICKET MÉDIO — único KPI com dado real por enquanto ===================== */
 const RAW = [
-  { nome:"Brena Carvalho",      time:"TITANS", meses:{ jan:1067.49, fev:748.67,  mar:1193.79, abr:898.12,  mai:1030.90 } },
-  { nome:"Emerson Rocha",       time:"MAORI",  meses:{ jan:1331.10, fev:1243.66, mar:1072.10, abr:1692.94, mai:1222.50 } },
-  { nome:"Clailton Nascimento", time:"MAORI",  meses:{ jan:1450.30, fev:1425.11, mar:1094.85, abr:697.50,  mai:1044.55 } },
-  { nome:"Lucas Machado",       time:"TITANS", meses:{ jan:2430.77, fev:880.53,  mar:668.30,  abr:980.73,  mai:803.79  } },
-  { nome:"João Victor",         time:"MAORI",  meses:{ jan:1066.32, fev:762.94,  mar:752.80,  abr:693.30,  mai:776.78  } },
-  { nome:"Alex Uchôa",          time:"MAORI",  meses:{ jan:1071.73, fev:1149.87, mar:785.00,  abr:1176.43, mai:1493.12 } },
-  { nome:"André Queiroz",       time:"MAORI",  meses:{ jan:1133.52, fev:663.42,  mar:823.07,  abr:1439.55, mai:562.72  } },
-  { nome:"Rafael Lima",         time:"TITANS", meses:{ jan:711.00,  fev:851.29,  mar:911.45,  abr:667.97,  mai:943.19  } },
-  { nome:"Jéssika Lima",        time:"TITANS", meses:{ jan:812.25,  fev:874.33,  mar:1131.69, abr:783.75,  mai:1218.94 } },
-  { nome:"Patrício Felix",      time:"TITANS", meses:{ jan:1201.39, fev:910.67,  mar:797.25,  abr:838.74,  mai:901.97  } },
-  { nome:"Jossiane",            time:"MAORI",  meses:{ jan:1072.21, fev:1806.75, mar:1420.32, abr:1288.83, mai:1446.50 } },
-  { nome:"Júnior Furtado",      time:"TITANS", meses:{ jan:null,    fev:null,    mar:null,    abr:null,    mai:709.57  } },
+  { nome:"Brena Carvalho",      time:"TITANS", meses:{ jan:1067.49, fev:748.67,  mar:1193.79, abr:898.12,  mai:1030.90, jun:937.90  } },
+  { nome:"Emerson Rocha",       time:"MAORI",  meses:{ jan:1331.10, fev:1243.66, mar:1072.10, abr:1692.94, mai:1222.50, jun:1849.86 } },
+  { nome:"Clailton Nascimento", time:"MAORI",  meses:{ jan:1450.30, fev:1425.11, mar:1094.85, abr:697.50,  mai:1044.55, jun:1404.86 } },
+  { nome:"Lucas Machado",       time:"TITANS", meses:{ jan:2430.77, fev:880.53,  mar:668.30,  abr:980.73,  mai:803.79,  jun:708.75  } },
+  { nome:"João Victor",         time:"MAORI",  meses:{ jan:1066.32, fev:762.94,  mar:752.80,  abr:693.30,  mai:776.78,  jun:728.06  } },
+  { nome:"Alex Uchôa",          time:"MAORI",  meses:{ jan:1071.73, fev:1149.87, mar:785.00,  abr:1176.43, mai:1493.12, jun:643.50  } },
+  { nome:"André Queiroz",       time:"MAORI",  meses:{ jan:1133.52, fev:663.42,  mar:823.07,  abr:1439.55, mai:562.72,  jun:1087.26 } },
+  { nome:"Rafael Lima",         time:"TITANS", meses:{ jan:711.00,  fev:851.29,  mar:911.45,  abr:667.97,  mai:943.19,  jun:715.89  } },
+  { nome:"Jéssika Lima",        time:"TITANS", meses:{ jan:812.25,  fev:874.33,  mar:1131.69, abr:783.75,  mai:1218.94, jun:830.10  } },
+  { nome:"Patrício Felix",      time:"TITANS", meses:{ jan:1201.39, fev:910.67,  mar:797.25,  abr:838.74,  mai:901.97,  jun:985.10  } },
+  { nome:"Jossiane",            time:"MAORI",  meses:{ jan:1072.21, fev:1806.75, mar:1420.32, abr:1288.83, mai:1446.50, jun:null    } },
+  { nome:"Júnior Furtado",      time:"TITANS", meses:{ jan:null,    fev:null,    mar:null,    abr:null,    mai:709.57,  jun:1015.11 } },
 ];
 
 const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai:"Maio",jun:"Junho",jul:"Julho",ago:"Agosto",set:"Setembro",out:"Outubro",nov:"Novembro",dez:"Dezembro"};
@@ -221,18 +215,18 @@ const LOST_CYCLE_DATA = {"Rafael Lima": [["2026-06-19", 0.88, "De 10 a 49 funcio
    Fonte: gráfico "Ciclo de Ganho" do Pipedrive filtrado por mês, funil Vendas, status Ganho.
    null = closer não teve negócio ganho naquele mês. */
 const CICLO_VENDA = {
-  "Brena Carvalho":      { jan:4,    fev:null, mar:9,    abr:4,  mai:18 },
-  "Emerson Rocha":       { jan:12,   fev:19,   mar:10,   abr:7,  mai:null },
-  "Clailton Nascimento": { jan:4,    fev:4,    mar:5,    abr:2,  mai:6  },
-  "Lucas Machado":       { jan:13,   fev:9,    mar:4,    abr:6,  mai:6  },
-  "João Victor":         { jan:5,    fev:5,    mar:6,    abr:6,  mai:4  },
-  "Alex Uchôa":          { jan:8,    fev:18,   mar:5,    abr:3,  mai:3  },
-  "André Queiroz":       { jan:19,   fev:7,    mar:11,   abr:11, mai:8  },
-  "Rafael Lima":         { jan:2,    fev:14,   mar:7,    abr:10, mai:11 },
-  "Jéssika Lima":        { jan:9,    fev:17,   mar:5,    abr:6,  mai:21 },
-  "Patrício Felix":      { jan:5,    fev:11,   mar:24,   abr:6,  mai:5  },
-  "Jossiane":            { jan:8,    fev:7,    mar:20,   abr:5,  mai:5  },
-  "Júnior Furtado":      { jan:null, fev:null, mar:null, abr:null, mai:6 },
+  "Brena Carvalho":      { jan:4,    fev:null, mar:9,    abr:4,  mai:18,   jun:null },
+  "Emerson Rocha":       { jan:12,   fev:19,   mar:10,   abr:7,  mai:null, jun:null },
+  "Clailton Nascimento": { jan:4,    fev:4,    mar:5,    abr:2,  mai:6,    jun:null },
+  "Lucas Machado":       { jan:13,   fev:9,    mar:4,    abr:6,  mai:6,    jun:null },
+  "João Victor":         { jan:5,    fev:5,    mar:6,    abr:6,  mai:4,    jun:null },
+  "Alex Uchôa":          { jan:8,    fev:18,   mar:5,    abr:3,  mai:3,    jun:null },
+  "André Queiroz":       { jan:19,   fev:7,    mar:11,   abr:11, mai:8,    jun:null },
+  "Rafael Lima":         { jan:2,    fev:14,   mar:7,    abr:10, mai:11,   jun:null },
+  "Jéssika Lima":        { jan:9,    fev:17,   mar:5,    abr:6,  mai:21,   jun:null },
+  "Patrício Felix":      { jan:5,    fev:11,   mar:24,   abr:6,  mai:5,    jun:null },
+  "Jossiane":            { jan:8,    fev:7,    mar:20,   abr:5,  mai:5,    jun:null },
+  "Júnior Furtado":      { jan:null, fev:null, mar:null, abr:null, mai:6,  jun:null },
 };
 
 const SIZE_OPTIONS = ["De 1 a 2 funcionários","Até 4 funcionários","De 3 a 5 funcionários","De 5 a 7 funcionários","De 6 a 9 funcionários","De 8 a 9 funcionários","De 10 a 49 funcionários","De 50 a 99 funcionários","Mais de 100 funcionários","Não informado"];

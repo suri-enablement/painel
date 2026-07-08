@@ -135,7 +135,7 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
         <p>Evolução mês a mês por closer — tendência e trajetória por indicador</p>
       </div>
     </div>
-    <a class="back-link" href="portal-closers.html">← Closers</a>
+    <a class="back-link" href="index.html">← Painéis</a>
   </div>
 
   <div class="kpi-tabs" id="kpiTabs">
@@ -191,113 +191,113 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
 /* Ticket Médio — direto da coluna TICKET das planilhas mensais Suri Champions (Jan-Mai/2026) */
 /* Receita total por closer/mês — planilhas Suri Champions (Jan-Mai/2026), validado contra xlsx */
 const RECEITA = {
-  "Brena Carvalho":      {jan:14944.85, fev:2246.00,  mar:8356.50,  abr:11675.50, mai:5154.50},
-  "Emerson Rocha":       {jan:6655.50,  fev:17411.25, mar:13937.25, abr:13543.50, mai:3667.50},
-  "Clailton Nascimento": {jan:21754.50, fev:19951.50, mar:12043.39, abr:2790.00,  mai:11490.00},
-  "Lucas Machado":       {jan:31600.04, fev:11446.90, mar:14034.25, abr:10788.00, mai:5626.50},
-  "João Victor":         {jan:14928.50, fev:13733.00, mar:11292.00, abr:3466.50,  mai:13982.00},
-  "Alex Uchôa":          {jan:13932.50, fev:12648.60, mar:7065.00,  abr:8235.00,  mai:14931.20},
-  "André Queiroz":       {jan:14735.80, fev:12604.95, mar:16461.30, abr:14395.50, mai:4501.75},
-  "Rafael Lima":         {jan:11376.00, fev:11066.75, mar:14583.25, abr:10019.50, mai:19807.00},
-  "Jéssika Lima":        {jan:8122.50,  fev:7869.00,  mar:13580.25, abr:4702.50,  mai:9751.50},
-  "Patrício Felix":      {jan:16819.50, fev:8196.00,  mar:9567.00,  abr:14258.60, mai:14431.50},
-  "Jossiane":            {jan:13938.78, fev:7227.00,  mar:15623.50, abr:7733.00,  mai:8679.00},
-  "Júnior Furtado":      {jan:null,     fev:null,     mar:null,     abr:null,     mai:4967.00},
+  "Brena Carvalho":      {jan:14944.85, fev:2246.00,  mar:8356.50,  abr:11675.50, mai:5154.50,  jun:12192.75},
+  "Emerson Rocha":       {jan:6655.50,  fev:17411.25, mar:13937.25, abr:13543.50, mai:3667.50,  jun:16648.75},
+  "Clailton Nascimento": {jan:21754.50, fev:19951.50, mar:12043.39, abr:2790.00,  mai:11490.00, jun:9834.0},
+  "Lucas Machado":       {jan:31600.04, fev:11446.90, mar:14034.25, abr:10788.00, mai:5626.50,  jun:7087.5},
+  "João Victor":         {jan:14928.50, fev:13733.00, mar:11292.00, abr:3466.50,  mai:13982.00, jun:5824.5},
+  "Alex Uchôa":          {jan:13932.50, fev:12648.60, mar:7065.00,  abr:8235.00,  mai:14931.20, jun:5791.5},
+  "André Queiroz":       {jan:14735.80, fev:12604.95, mar:16461.30, abr:14395.50, mai:4501.75,  jun:13047.1},
+  "Rafael Lima":         {jan:11376.00, fev:11066.75, mar:14583.25, abr:10019.50, mai:19807.00, jun:10022.5},
+  "Jéssika Lima":        {jan:8122.50,  fev:7869.00,  mar:13580.25, abr:4702.50,  mai:9751.50,  jun:12451.5},
+  "Patrício Felix":      {jan:16819.50, fev:8196.00,  mar:9567.00,  abr:14258.60, mai:14431.50, jun:19702.0},
+  "Jossiane":            {jan:13938.78, fev:7227.00,  mar:15623.50, abr:7733.00,  mai:8679.00,  jun:null},
+  "Júnior Furtado":      {jan:null,     fev:null,     mar:null,     abr:null,     mai:4967.00,  jun:14211.6},
 };
 
 /* Vendas (negócios ganhos) por closer/mês — mesma fonte */
 const VENDAS = {
-  "Brena Carvalho":      {jan:14, fev:3,  mar:7,  abr:13, mai:5},
-  "Emerson Rocha":       {jan:5,  fev:14, mar:13, abr:8,  mai:3},
-  "Clailton Nascimento": {jan:15, fev:14, mar:11, abr:4,  mai:11},
-  "Lucas Machado":       {jan:13, fev:13, mar:21, abr:11, mai:7},
-  "João Victor":         {jan:14, fev:18, mar:15, abr:5,  mai:18},
-  "Alex Uchôa":          {jan:13, fev:11, mar:9,  abr:7,  mai:10},
-  "André Queiroz":       {jan:13, fev:19, mar:20, abr:10, mai:8},
-  "Rafael Lima":         {jan:16, fev:13, mar:16, abr:15, mai:21},
-  "Jéssika Lima":        {jan:10, fev:9,  mar:12, abr:6,  mai:8},
-  "Patrício Felix":      {jan:14, fev:9,  mar:12, abr:17, mai:16},
-  "Jossiane":            {jan:13, fev:4,  mar:11, abr:6,  mai:6},
-  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:7},
+  "Brena Carvalho":      {jan:14, fev:3,  mar:7,  abr:13, mai:5,    jun:13},
+  "Emerson Rocha":       {jan:5,  fev:14, mar:13, abr:8,  mai:3,    jun:9},
+  "Clailton Nascimento": {jan:15, fev:14, mar:11, abr:4,  mai:11,   jun:7},
+  "Lucas Machado":       {jan:13, fev:13, mar:21, abr:11, mai:7,    jun:10},
+  "João Victor":         {jan:14, fev:18, mar:15, abr:5,  mai:18,   jun:8},
+  "Alex Uchôa":          {jan:13, fev:11, mar:9,  abr:7,  mai:10,   jun:9},
+  "André Queiroz":       {jan:13, fev:19, mar:20, abr:10, mai:8,    jun:12},
+  "Rafael Lima":         {jan:16, fev:13, mar:16, abr:15, mai:21,   jun:14},
+  "Jéssika Lima":        {jan:10, fev:9,  mar:12, abr:6,  mai:8,    jun:15},
+  "Patrício Felix":      {jan:14, fev:9,  mar:12, abr:17, mai:16,   jun:20},
+  "Jossiane":            {jan:13, fev:4,  mar:11, abr:6,  mai:6,    jun:null},
+  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:7,jun:14},
 };
 
 /* Conversão (Vendas ÷ Reuniões × 100) — coluna H das planilhas Champions, Jan-Mai/2026 */
 const CONVERSAO = {
-  "Brena Carvalho":      {jan:31.8, fev:10.0, mar:18.4, abr:25.0, mai:12.8},
-  "Emerson Rocha":       {jan:11.4, fev:43.8, mar:36.1, abr:19.5, mai:6.5},
-  "Clailton Nascimento": {jan:30.0, fev:35.0, mar:27.5, abr:8.5,  mai:20.4},
-  "Lucas Machado":       {jan:25.0, fev:31.7, mar:37.5, abr:22.0, mai:12.3},
-  "João Victor":         {jan:28.6, fev:29.0, mar:35.7, abr:9.6,  mai:36.7},
-  "Alex Uchôa":          {jan:19.1, fev:22.0, mar:20.5, abr:12.3, mai:15.4},
-  "André Queiroz":       {jan:25.0, fev:33.3, mar:37.7, abr:19.6, mai:18.2},
-  "Rafael Lima":         {jan:18.8, fev:22.8, mar:27.1, abr:22.4, mai:29.6},
-  "Jéssika Lima":        {jan:15.6, fev:30.0, mar:32.4, abr:14.6, mai:17.4},
-  "Patrício Felix":      {jan:25.5, fev:21.4, mar:27.9, abr:29.8, mai:27.1},
-  "Jossiane":            {jan:31.7, fev:8.5,  mar:23.9, abr:11.8, mai:20.7},
-  "Júnior Furtado":      {jan:null, fev:null, mar:null, abr:null, mai:25.9},
+  "Brena Carvalho":      {jan:31.8, fev:10.0, mar:18.4, abr:25.0, mai:12.8, jun:26.0},
+  "Emerson Rocha":       {jan:11.4, fev:43.8, mar:36.1, abr:19.5, mai:6.5,  jun:28.13},
+  "Clailton Nascimento": {jan:30.0, fev:35.0, mar:27.5, abr:8.5,  mai:20.4, jun:17.07},
+  "Lucas Machado":       {jan:25.0, fev:31.7, mar:37.5, abr:22.0, mai:12.3, jun:22.73},
+  "João Victor":         {jan:28.6, fev:29.0, mar:35.7, abr:9.6,  mai:36.7, jun:18.18},
+  "Alex Uchôa":          {jan:19.1, fev:22.0, mar:20.5, abr:12.3, mai:15.4, jun:14.75},
+  "André Queiroz":       {jan:25.0, fev:33.3, mar:37.7, abr:19.6, mai:18.2, jun:21.05},
+  "Rafael Lima":         {jan:18.8, fev:22.8, mar:27.1, abr:22.4, mai:29.6, jun:21.54},
+  "Jéssika Lima":        {jan:15.6, fev:30.0, mar:32.4, abr:14.6, mai:17.4, jun:31.25},
+  "Patrício Felix":      {jan:25.5, fev:21.4, mar:27.9, abr:29.8, mai:27.1, jun:36.4},
+  "Jossiane":            {jan:31.7, fev:8.5,  mar:23.9, abr:11.8, mai:20.7, jun:null},
+  "Júnior Furtado":      {jan:null, fev:null, mar:null, abr:null, mai:25.9, jun:23.73},
 };
 
 /* Reuniões por closer/mês — mesma fonte */
 const REUNIOES = {
-  "Brena Carvalho":      {jan:44, fev:30, mar:38, abr:52, mai:39},
-  "Emerson Rocha":       {jan:44, fev:32, mar:36, abr:41, mai:46},
-  "Clailton Nascimento": {jan:50, fev:40, mar:40, abr:47, mai:54},
-  "Lucas Machado":       {jan:52, fev:41, mar:56, abr:50, mai:57},
-  "João Victor":         {jan:49, fev:62, mar:42, abr:52, mai:49},
-  "Alex Uchôa":          {jan:68, fev:50, mar:44, abr:57, mai:65},
-  "André Queiroz":       {jan:52, fev:57, mar:53, abr:51, mai:44},
-  "Rafael Lima":         {jan:85, fev:57, mar:59, abr:67, mai:71},
-  "Jéssika Lima":        {jan:64, fev:30, mar:37, abr:41, mai:46},
-  "Patrício Felix":      {jan:55, fev:42, mar:43, abr:57, mai:59},
-  "Jossiane":            {jan:41, fev:47, mar:46, abr:51, mai:29},
-  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:27},
+  "Brena Carvalho":      {jan:44, fev:30, mar:38, abr:52, mai:39, jun:50},
+  "Emerson Rocha":       {jan:44, fev:32, mar:36, abr:41, mai:46, jun:32},
+  "Clailton Nascimento": {jan:50, fev:40, mar:40, abr:47, mai:54, jun:41},
+  "Lucas Machado":       {jan:52, fev:41, mar:56, abr:50, mai:57, jun:44},
+  "João Victor":         {jan:49, fev:62, mar:42, abr:52, mai:49, jun:44},
+  "Alex Uchôa":          {jan:68, fev:50, mar:44, abr:57, mai:65, jun:61},
+  "André Queiroz":       {jan:52, fev:57, mar:53, abr:51, mai:44, jun:57},
+  "Rafael Lima":         {jan:85, fev:57, mar:59, abr:67, mai:71, jun:65},
+  "Jéssika Lima":        {jan:64, fev:30, mar:37, abr:41, mai:46, jun:48},
+  "Patrício Felix":      {jan:55, fev:42, mar:43, abr:57, mai:59, jun:55},
+  "Jossiane":            {jan:41, fev:47, mar:46, abr:51, mai:29, jun:null},
+  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:27,jun:59},
 };
 
 const TICKET = {
-  "Brena Carvalho":      {jan:1067.49, fev:748.67,  mar:1193.79, abr:898.12,  mai:1030.90},
-  "Emerson Rocha":       {jan:1331.10, fev:1243.66, mar:1072.10, abr:1692.94, mai:1222.50},
-  "Clailton Nascimento": {jan:1450.30, fev:1425.11, mar:1094.85, abr:697.50,  mai:1044.55},
-  "Lucas Machado":       {jan:2430.77, fev:880.53,  mar:668.30,  abr:980.73,  mai:803.79},
-  "João Victor":         {jan:1066.32, fev:762.94,  mar:752.80,  abr:693.30,  mai:776.78},
-  "Alex Uchôa":          {jan:1071.73, fev:1149.87, mar:785.00,  abr:1176.43, mai:1493.12},
-  "André Queiroz":       {jan:1133.52, fev:663.42,  mar:823.07,  abr:1439.55, mai:562.72},
-  "Rafael Lima":         {jan:711.00,  fev:851.29,  mar:911.45,  abr:667.97,  mai:943.19},
-  "Jéssika Lima":        {jan:812.25,  fev:874.33,  mar:1131.69, abr:783.75,  mai:1218.94},
-  "Patrício Felix":      {jan:1201.39, fev:910.67,  mar:797.25,  abr:838.74,  mai:901.97},
-  "Jossiane":            {jan:1072.21, fev:1806.75, mar:1420.32, abr:1288.83, mai:1446.50},
-  "Júnior Furtado":      {jan:null,    fev:null,    mar:null,    abr:null,    mai:709.57},
+  "Brena Carvalho":      {jan:1067.49, fev:748.67,  mar:1193.79, abr:898.12,  mai:1030.90, jun:937.9},
+  "Emerson Rocha":       {jan:1331.10, fev:1243.66, mar:1072.10, abr:1692.94, mai:1222.50, jun:1849.86},
+  "Clailton Nascimento": {jan:1450.30, fev:1425.11, mar:1094.85, abr:697.50,  mai:1044.55, jun:1404.86},
+  "Lucas Machado":       {jan:2430.77, fev:880.53,  mar:668.30,  abr:980.73,  mai:803.79,  jun:708.75},
+  "João Victor":         {jan:1066.32, fev:762.94,  mar:752.80,  abr:693.30,  mai:776.78,  jun:728.06},
+  "Alex Uchôa":          {jan:1071.73, fev:1149.87, mar:785.00,  abr:1176.43, mai:1493.12, jun:643.5},
+  "André Queiroz":       {jan:1133.52, fev:663.42,  mar:823.07,  abr:1439.55, mai:562.72,  jun:1087.26},
+  "Rafael Lima":         {jan:711.00,  fev:851.29,  mar:911.45,  abr:667.97,  mai:943.19,  jun:715.89},
+  "Jéssika Lima":        {jan:812.25,  fev:874.33,  mar:1131.69, abr:783.75,  mai:1218.94, jun:830.1},
+  "Patrício Felix":      {jan:1201.39, fev:910.67,  mar:797.25,  abr:838.74,  mai:901.97,  jun:985.1},
+  "Jossiane":            {jan:1072.21, fev:1806.75, mar:1420.32, abr:1288.83, mai:1446.50, jun:null},
+  "Júnior Furtado":      {jan:null,    fev:null,    mar:null,    abr:null,    mai:709.57,  jun:1015.11},
 };
 
 /* Ciclo de Venda (dias) — relatório Ciclo de Ganho do Pipedrive, mês a mês */
 const CICLO_VENDA = {
-  "Brena Carvalho":      {jan:4,    fev:null, mar:9,    abr:4,    mai:18},
-  "Emerson Rocha":       {jan:12,   fev:19,   mar:10,   abr:7,    mai:null},
-  "Clailton Nascimento": {jan:4,    fev:4,    mar:5,    abr:2,    mai:6},
-  "Lucas Machado":       {jan:13,   fev:9,    mar:4,    abr:6,    mai:6},
-  "João Victor":         {jan:5,    fev:5,    mar:6,    abr:6,    mai:4},
-  "Alex Uchôa":          {jan:8,    fev:18,   mar:5,    abr:3,    mai:3},
-  "André Queiroz":       {jan:19,   fev:7,    mar:11,   abr:11,   mai:8},
-  "Rafael Lima":         {jan:2,    fev:14,   mar:7,    abr:10,   mai:11},
-  "Jéssika Lima":        {jan:9,    fev:17,   mar:5,    abr:6,    mai:21},
-  "Patrício Felix":      {jan:5,    fev:11,   mar:24,   abr:6,    mai:5},
-  "Jossiane":            {jan:8,    fev:7,    mar:20,   abr:5,    mai:5},
-  "Júnior Furtado":      {jan:null, fev:null, mar:null, abr:null, mai:6},
+  "Brena Carvalho":      {jan:4,    fev:null, mar:9,    abr:4,    mai:18,   jun:null},
+  "Emerson Rocha":       {jan:12,   fev:19,   mar:10,   abr:7,    mai:null, jun:null},
+  "Clailton Nascimento": {jan:4,    fev:4,    mar:5,    abr:2,    mai:6,    jun:null},
+  "Lucas Machado":       {jan:13,   fev:9,    mar:4,    abr:6,    mai:6,    jun:null},
+  "João Victor":         {jan:5,    fev:5,    mar:6,    abr:6,    mai:4,    jun:null},
+  "Alex Uchôa":          {jan:8,    fev:18,   mar:5,    abr:3,    mai:3,    jun:null},
+  "André Queiroz":       {jan:19,   fev:7,    mar:11,   abr:11,   mai:8,    jun:null},
+  "Rafael Lima":         {jan:2,    fev:14,   mar:7,    abr:10,   mai:11,   jun:null},
+  "Jéssika Lima":        {jan:9,    fev:17,   mar:5,    abr:6,    mai:21,   jun:null},
+  "Patrício Felix":      {jan:5,    fev:11,   mar:24,   abr:6,    mai:5,    jun:null},
+  "Jossiane":            {jan:8,    fev:7,    mar:20,   abr:5,    mai:5,    jun:null},
+  "Júnior Furtado":      {jan:null, fev:null, mar:null, abr:null, mai:6,    jun:null},
 };
 
 /* Ciclo de Lost (dias) — média mensal agregada do export de negócios perdidos do Pipedrive */
 const CICLO_LOST = {
-  "Brena Carvalho":      {jan:25, fev:27, mar:15, abr:13, mai:22},
-  "Emerson Rocha":       {jan:25, fev:19, mar:21, abr:35, mai:19},
-  "Clailton Nascimento": {jan:17, fev:20, mar:19, abr:19, mai:21},
-  "Lucas Machado":       {jan:45, fev:46, mar:41, abr:57, mai:56},
-  "João Victor":         {jan:26, fev:14, mar:14, abr:24, mai:22},
-  "Alex Uchôa":          {jan:36, fev:37, mar:26, abr:22, mai:36},
-  "André Queiroz":       {jan:31, fev:26, mar:24, abr:26, mai:39},
-  "Rafael Lima":         {jan:15, fev:21, mar:15, abr:18, mai:15},
-  "Jéssika Lima":        {jan:51, fev:57, mar:42, abr:49, mai:49},
-  "Patrício Felix":      {jan:27, fev:20, mar:25, abr:13, mai:35},
-  "Jossiane":            {jan:38, fev:44, mar:39, abr:38, mai:36},
-  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:35},
+  "Brena Carvalho":      {jan:25, fev:27, mar:15, abr:13, mai:22, jun:15},
+  "Emerson Rocha":       {jan:25, fev:19, mar:21, abr:35, mai:19, jun:41},
+  "Clailton Nascimento": {jan:17, fev:20, mar:19, abr:19, mai:21, jun:28},
+  "Lucas Machado":       {jan:45, fev:46, mar:41, abr:57, mai:56, jun:46},
+  "João Victor":         {jan:26, fev:14, mar:14, abr:24, mai:22, jun:12},
+  "Alex Uchôa":          {jan:36, fev:37, mar:26, abr:22, mai:36, jun:22},
+  "André Queiroz":       {jan:31, fev:26, mar:24, abr:26, mai:39, jun:32},
+  "Rafael Lima":         {jan:15, fev:21, mar:15, abr:18, mai:15, jun:21},
+  "Jéssika Lima":        {jan:51, fev:57, mar:42, abr:49, mai:49, jun:31},
+  "Patrício Felix":      {jan:27, fev:20, mar:25, abr:13, mai:35, jun:22},
+  "Jossiane":            {jan:38, fev:44, mar:39, abr:38, mai:36, jun:37},
+  "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:35,jun:34},
 };
 
 const CLOSERS = [
@@ -315,9 +315,9 @@ const CLOSERS = [
   {nome:"Júnior Furtado",      time:"TITANS"},
 ];
 
-const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai:"Maio"};
-const MONTH_SHORT  = {jan:"Jan",fev:"Fev",mar:"Mar",abr:"Abr",mai:"Mai"};
-const MONTH_KEYS   = ["jan","fev","mar","abr","mai"];
+const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai:"Maio",jun:"Junho"};
+const MONTH_SHORT  = {jan:"Jan",fev:"Fev",mar:"Mar",abr:"Abr",mai:"Mai",jun:"Jun"};
+const MONTH_KEYS   = ["jan","fev","mar","abr","mai","jun"];
 
 function fmtBRL(v){return v==null?"—":"R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
 
@@ -374,7 +374,7 @@ let currentKpi = "ticket";
 let currentTeam = "all";
 let closerQuery = "";
 let rangeFrom = "jan";
-let rangeTo = "mai";
+let rangeTo = "jun";
 let currentSort = {key:"acumulado", dir:"desc"};
 
 function normalize(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}

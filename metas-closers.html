@@ -264,12 +264,6 @@
     body{padding:20px;}
   }
 </style>
-<script>
-if(sessionStorage.getItem("suri_auth")!=="ok"){
-  sessionStorage.setItem("suri_return", location.pathname);
-  location.replace("login.html");
-}
-</script>
 </head>
 <body>
 <div class="page">
@@ -283,7 +277,7 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
         <p>% de meta batida por mês e tendência projetada</p>
       </div>
     </div>
-    <div class="period-tag" id="periodTag">Jan – Mai · 2026</div>
+    <div class="period-tag" id="periodTag">Jan – Jun · 2026</div>
   </div>
 
   <div class="kpis" id="kpis"></div>
@@ -342,18 +336,18 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
 <script>
 /* ===================== DADOS BRUTOS (Receita, Meta) por closer/mês ===================== */
 const RAW = [
-  { nome:"Brena Carvalho",      time:"TITANS", meses:{ jan:[14944.85,13853.97], fev:[2246.00,11413.54],  mar:[8356.50,13561.55],  abr:[11675.50,14160.65], mai:[5154.50,12288.12] } },
-  { nome:"Emerson Rocha",       time:"MAORI",  meses:{ jan:[6655.50,13853.97],  fev:[17411.25,11413.54], mar:[13937.25,13562.00], abr:[13543.50,14160.65], mai:[3667.50,16384.16] } },
-  { nome:"Clailton Nascimento", time:"MAORI",  meses:{ jan:[21754.50,13853.97], fev:[19951.50,11413.54], mar:[12043.39,13562.00], abr:[2790.00,14160.65],  mai:[11490.00,16384.16] } },
-  { nome:"Lucas Machado",       time:"TITANS", meses:{ jan:[31600.04,13853.97], fev:[11446.90,11413.54], mar:[14034.25,13561.55], abr:[10788.00,14160.65], mai:[5626.50,16384.16] } },
-  { nome:"João Victor",         time:"MAORI",  meses:{ jan:[14928.50,13853.97], fev:[13733.00,11413.54], mar:[11292.00,13562.00], abr:[3466.50,14160.65],  mai:[13982.00,16384.16] } },
-  { nome:"Alex Uchôa",          time:"MAORI",  meses:{ jan:[13932.50,13853.97], fev:[12648.60,11413.54], mar:[7065.00,13562.00],  abr:[8235.00,14160.65],  mai:[14931.20,16384.16] } },
-  { nome:"André Queiroz",       time:"MAORI",  meses:{ jan:[14735.80,13853.97], fev:[12604.95,11413.54], mar:[16461.30,13562.00], abr:[14395.50,14160.65], mai:[4501.75,16384.16] } },
-  { nome:"Rafael Lima",         time:"TITANS", meses:{ jan:[11376.00,13853.97], fev:[11066.75,11413.54], mar:[14583.25,13561.55], abr:[10019.50,14160.65], mai:[19807.00,20552.29] } },
-  { nome:"Jéssika Lima",        time:"TITANS", meses:{ jan:[8122.50,13853.97],  fev:[7869.00,11413.54],  mar:[13580.25,13561.55], abr:[4702.50,14160.65],  mai:[9751.50,16384.16] } },
-  { nome:"Patrício Felix",      time:"TITANS", meses:{ jan:[16819.50,13853.97], fev:[8196.00,11413.54],  mar:[9567.00,13561.55],  abr:[14258.60,14160.65], mai:[14431.50,16384.16] } },
-  { nome:"Jossiane",            time:"MAORI",  meses:{ jan:[13938.78,8312.53],  fev:[7227.00,11413.54],  mar:[15623.50,13562.00], abr:[7733.00,14160.65],  mai:[8679.00,8192.08] } },
-  { nome:"Júnior Furtado",      time:"TITANS", meses:{ jan:[null,null],         fev:[null,null],         mar:[null,null],         abr:[null,null],         mai:[4967.00,3276.83] } },
+  { nome:"Brena Carvalho",      time:"TITANS", meses:{ jan:[14944.85,13853.97], fev:[2246.00,11413.54],  mar:[8356.50,13561.55],  abr:[11675.50,14160.65], mai:[5154.50,12288.12], jun:[12192.75,15980.02] } },
+  { nome:"Emerson Rocha",       time:"MAORI",  meses:{ jan:[6655.50,13853.97],  fev:[17411.25,11413.54], mar:[13937.25,13562.00], abr:[13543.50,14160.65], mai:[3667.50,16384.16], jun:[16648.75,15980.02] } },
+  { nome:"Clailton Nascimento", time:"MAORI",  meses:{ jan:[21754.50,13853.97], fev:[19951.50,11413.54], mar:[12043.39,13562.00], abr:[2790.00,14160.65],  mai:[11490.00,16384.16], jun:[9834.0,15980.02] } },
+  { nome:"Lucas Machado",       time:"TITANS", meses:{ jan:[31600.04,13853.97], fev:[11446.90,11413.54], mar:[14034.25,13561.55], abr:[10788.00,14160.65], mai:[5626.50,16384.16], jun:[7087.5,15980.02] } },
+  { nome:"João Victor",         time:"MAORI",  meses:{ jan:[14928.50,13853.97], fev:[13733.00,11413.54], mar:[11292.00,13562.00], abr:[3466.50,14160.65],  mai:[13982.00,16384.16], jun:[5824.5,15980.02] } },
+  { nome:"Alex Uchôa",          time:"MAORI",  meses:{ jan:[13932.50,13853.97], fev:[12648.60,11413.54], mar:[7065.00,13562.00],  abr:[8235.00,14160.65],  mai:[14931.20,16384.16], jun:[5791.5,15980.02] } },
+  { nome:"André Queiroz",       time:"MAORI",  meses:{ jan:[14735.80,13853.97], fev:[12604.95,11413.54], mar:[16461.30,13562.00], abr:[14395.50,14160.65], mai:[4501.75,16384.16], jun:[13047.1,15980.02] } },
+  { nome:"Rafael Lima",         time:"TITANS", meses:{ jan:[11376.00,13853.97], fev:[11066.75,11413.54], mar:[14583.25,13561.55], abr:[10019.50,14160.65], mai:[19807.00,20552.29], jun:[10022.5,19815.23] } },
+  { nome:"Jéssika Lima",        time:"TITANS", meses:{ jan:[8122.50,13853.97],  fev:[7869.00,11413.54],  mar:[13580.25,13561.55], abr:[4702.50,14160.65],  mai:[9751.50,16384.16], jun:[12451.5,15980.02] } },
+  { nome:"Patrício Felix",      time:"TITANS", meses:{ jan:[16819.50,13853.97], fev:[8196.00,11413.54],  mar:[9567.00,13561.55],  abr:[14258.60,14160.65], mai:[14431.50,16384.16], jun:[19702.0,15980.02] } },
+  { nome:"Jossiane",            time:"MAORI",  meses:{ jan:[13938.78,8312.53],  fev:[7227.00,11413.54],  mar:[15623.50,13562.00], abr:[7733.00,14160.65],  mai:[8679.00,8192.08], jun:[null,null] } },
+  { nome:"Júnior Furtado",      time:"TITANS", meses:{ jan:[null,null],         fev:[null,null],         mar:[null,null],         abr:[null,null],         mai:[4967.00,3276.83], jun:[14211.6,11186.01] } },
 ];
 
 /* Rótulos de todos os meses possíveis — quando novos meses forem adicionados ao objeto
