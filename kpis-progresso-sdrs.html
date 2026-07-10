@@ -121,8 +121,14 @@
   <div class="controls">
     <div class="controls-left">
       <input type="text" id="sdrSearch" class="search-input" placeholder="Buscar SDR...">
+      <div id="porteFilterWrap" style="display:none;">
+        <select id="porteFilter" style="font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:var(--blue-dark);border:1px solid var(--border);border-radius:18px;padding:7px 12px;background:var(--surface);cursor:pointer;"></select>
+      </div>
     </div>
     <div class="controls-right">
+      <div id="porteFilterWrap" style="display:none;">
+        <select id="porteFilter" style="font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:var(--blue-dark);border:1px solid var(--border);border-radius:18px;padding:7px 12px;background:var(--surface);cursor:pointer;outline:none;"></select>
+      </div>
       <div class="sort-toggle" id="sortToggle">
         <button class="sort-btn active" data-dir="desc">↓ Maior–Menor</button>
         <button class="sort-btn" data-dir="asc">↑ Menor–Maior</button>
@@ -155,30 +161,30 @@
 
 const AGENDAMENTOS = {
   "Pedro Roncalli":   {jan:92, fev:83, mar:72, abr:83, mai:110, jun:107},
-  "Thiago de Brito":  {jan:96, fev:60, mar:73, abr:90, mai:121, jun:110},
+  "Thiago Mendonça":  {jan:96, fev:60, mar:73, abr:90, mai:121, jun:110},
   "Daniele Carvalho": {jan:91, fev:92, mar:76, abr:41, mai:108, jun:104},
   "Driele Rodrigues": {jan:70, fev:65, mar:64, abr:78, mai:105, jun:97},
-  "Cida Gomes":       {jan:69, fev:79, mar:75, abr:76, mai:99,  jun:79},
+  "Maria Aparecida":       {jan:69, fev:79, mar:75, abr:76, mai:99,  jun:79},
   "Júnior Lima":      {jan:74, fev:46, mar:49, abr:74, mai:86,  jun:91},
   "Iara Jéssica":    {jan:59, fev:41, mar:83, abr:72, mai:72,  jun:79},
 };
 
 const SHOWS = {
   "Pedro Roncalli":   {jan:74, fev:69, mar:63, abr:75, mai:95, jun:94},
-  "Thiago de Brito":  {jan:71, fev:51, mar:57, abr:64, mai:98, jun:90},
+  "Thiago Mendonça":  {jan:71, fev:51, mar:57, abr:64, mai:98, jun:90},
   "Daniele Carvalho": {jan:63, fev:71, mar:64, abr:30, mai:87, jun:94},
   "Driele Rodrigues": {jan:55, fev:59, mar:47, abr:74, mai:84, jun:78},
-  "Cida Gomes":       {jan:59, fev:69, mar:58, abr:68, mai:85, jun:69},
+  "Maria Aparecida":       {jan:59, fev:69, mar:58, abr:68, mai:85, jun:69},
   "Júnior Lima":      {jan:55, fev:42, mar:41, abr:62, mai:73, jun:73},
   "Iara Jéssica":    {jan:45, fev:36, mar:70, abr:58, mai:69, jun:77},
 };
 
 const VENDAS = {
   "Pedro Roncalli":   {jan:21, fev:21, mar:16, abr:12, mai:23, jun:20},
-  "Thiago de Brito":  {jan:10, fev:16, mar:11, abr:12, mai:18, jun:25},
+  "Thiago Mendonça":  {jan:10, fev:16, mar:11, abr:12, mai:18, jun:25},
   "Daniele Carvalho": {jan:13, fev:14, mar:22, abr:9,  mai:21, jun:21},
   "Driele Rodrigues": {jan:16, fev:15, mar:20, abr:11, mai:11, jun:15},
-  "Cida Gomes":       {jan:12, fev:13, mar:14, abr:10, mai:18, jun:14},
+  "Maria Aparecida":       {jan:12, fev:13, mar:14, abr:10, mai:18, jun:14},
   "Júnior Lima":      {jan:9,  fev:11, mar:12, abr:10, mai:12, jun:14},
   "Iara Jéssica":    {jan:13, fev:12, mar:17, abr:6,  mai:10, jun:15},
 };
@@ -193,9 +199,12 @@ Object.keys(AGENDAMENTOS).forEach(nome => {
   });
 });
 
+const SDR_VENDAS_BY_PORTE = {"all":{"Pedro Roncalli":{"jan":15,"fev":9,"mar":7,"abr":11,"mai":7,"jun":11},"Júnior Lima":{"jan":5,"fev":3,"mar":5,"abr":8,"mai":4,"jun":9},"Driele Rodrigues":{"jan":11,"fev":3,"mar":7,"abr":6,"mai":5,"jun":9},"Iara Jéssica":{"jan":8,"fev":5,"mar":7,"abr":6,"mai":4,"jun":5},"Daniele Carvalho":{"jan":7,"fev":7,"mar":8,"abr":8,"mai":11,"jun":11},"Thiago Mendonça":{"jan":7,"fev":9,"mar":3,"abr":12,"mai":10,"jun":15}},"De 1 a 2 funcionários":{"Pedro Roncalli":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Júnior Lima":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Driele Rodrigues":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Iara Jéssica":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Daniele Carvalho":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Thiago Mendonça":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0}},"Até 4 funcionários":{"Pedro Roncalli":{"jan":5,"fev":0,"mar":0,"abr":0,"mai":0,"jun":1},"Júnior Lima":{"jan":0,"fev":1,"mar":0,"abr":0,"mai":0,"jun":0},"Driele Rodrigues":{"jan":2,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Iara Jéssica":{"jan":3,"fev":0,"mar":0,"abr":0,"mai":1,"jun":0},"Daniele Carvalho":{"jan":2,"fev":1,"mar":0,"abr":0,"mai":0,"jun":0},"Thiago Mendonça":{"jan":1,"fev":1,"mar":0,"abr":0,"mai":0,"jun":0}},"De 3 a 5 funcionários":{"Pedro Roncalli":{"jan":0,"fev":1,"mar":1,"abr":3,"mai":1,"jun":1},"Júnior Lima":{"jan":0,"fev":0,"mar":1,"abr":3,"mai":1,"jun":2},"Driele Rodrigues":{"jan":0,"fev":0,"mar":1,"abr":1,"mai":0,"jun":3},"Iara Jéssica":{"jan":0,"fev":0,"mar":2,"abr":3,"mai":1,"jun":1},"Daniele Carvalho":{"jan":0,"fev":0,"mar":0,"abr":1,"mai":3,"jun":2},"Thiago Mendonça":{"jan":0,"fev":0,"mar":0,"abr":1,"mai":2,"jun":5}},"De 5 a 7 funcionários":{"Pedro Roncalli":{"jan":2,"fev":2,"mar":1,"abr":0,"mai":1,"jun":1},"Júnior Lima":{"jan":1,"fev":0,"mar":0,"abr":1,"mai":0,"jun":1},"Driele Rodrigues":{"jan":1,"fev":3,"mar":1,"abr":0,"mai":0,"jun":0},"Iara Jéssica":{"jan":0,"fev":1,"mar":0,"abr":0,"mai":0,"jun":0},"Daniele Carvalho":{"jan":1,"fev":0,"mar":1,"abr":1,"mai":0,"jun":0},"Thiago Mendonça":{"jan":2,"fev":2,"mar":0,"abr":0,"mai":0,"jun":0}},"De 6 a 9 funcionários":{"Pedro Roncalli":{"jan":0,"fev":2,"mar":1,"abr":2,"mai":3,"jun":1},"Júnior Lima":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":2,"jun":2},"Driele Rodrigues":{"jan":0,"fev":0,"mar":2,"abr":0,"mai":0,"jun":2},"Iara Jéssica":{"jan":0,"fev":0,"mar":3,"abr":0,"mai":0,"jun":1},"Daniele Carvalho":{"jan":0,"fev":1,"mar":1,"abr":1,"mai":1,"jun":0},"Thiago Mendonça":{"jan":0,"fev":2,"mar":2,"abr":3,"mai":1,"jun":4}},"De 8 a 9 funcionários":{"Pedro Roncalli":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Júnior Lima":{"jan":1,"fev":0,"mar":1,"abr":0,"mai":1,"jun":0},"Driele Rodrigues":{"jan":1,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Iara Jéssica":{"jan":2,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Daniele Carvalho":{"jan":0,"fev":1,"mar":0,"abr":0,"mai":0,"jun":0},"Thiago Mendonça":{"jan":2,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0}},"De 10 a 49 funcionários":{"Pedro Roncalli":{"jan":6,"fev":2,"mar":4,"abr":4,"mai":1,"jun":7},"Júnior Lima":{"jan":1,"fev":2,"mar":3,"abr":4,"mai":0,"jun":4},"Driele Rodrigues":{"jan":3,"fev":0,"mar":1,"abr":4,"mai":4,"jun":3},"Iara Jéssica":{"jan":2,"fev":3,"mar":0,"abr":3,"mai":2,"jun":2},"Daniele Carvalho":{"jan":3,"fev":2,"mar":5,"abr":5,"mai":6,"jun":8},"Thiago Mendonça":{"jan":1,"fev":3,"mar":1,"abr":6,"mai":3,"jun":6}},"De 50 a 99 funcionários":{"Pedro Roncalli":{"jan":0,"fev":1,"mar":0,"abr":1,"mai":0,"jun":0},"Júnior Lima":{"jan":1,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Driele Rodrigues":{"jan":0,"fev":0,"mar":1,"abr":0,"mai":0,"jun":0},"Iara Jéssica":{"jan":1,"fev":1,"mar":0,"abr":0,"mai":0,"jun":1},"Daniele Carvalho":{"jan":0,"fev":1,"mar":1,"abr":0,"mai":1,"jun":1},"Thiago Mendonça":{"jan":0,"fev":1,"mar":0,"abr":1,"mai":2,"jun":0}},"Mais de 100 funcionários":{"Pedro Roncalli":{"jan":1,"fev":1,"mar":0,"abr":1,"mai":1,"jun":0},"Júnior Lima":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Driele Rodrigues":{"jan":0,"fev":0,"mar":1,"abr":1,"mai":1,"jun":1},"Iara Jéssica":{"jan":0,"fev":0,"mar":1,"abr":0,"mai":0,"jun":0},"Daniele Carvalho":{"jan":1,"fev":1,"mar":0,"abr":0,"mai":0,"jun":0},"Thiago Mendonça":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":2,"jun":0}},"Não informado":{"Pedro Roncalli":{"jan":1,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Júnior Lima":{"jan":1,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Driele Rodrigues":{"jan":4,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Iara Jéssica":{"jan":0,"fev":0,"mar":1,"abr":0,"mai":0,"jun":0},"Daniele Carvalho":{"jan":0,"fev":0,"mar":0,"abr":0,"mai":0,"jun":0},"Thiago Mendonça":{"jan":1,"fev":0,"mar":0,"abr":1,"mai":0,"jun":0}}};
+const SIZE_KEYS = ["all","De 1 a 2 funcionários","Até 4 funcionários","De 3 a 5 funcionários","De 5 a 7 funcionários","De 6 a 9 funcionários","De 8 a 9 funcionários","De 10 a 49 funcionários","De 50 a 99 funcionários","Mais de 100 funcionários","Não informado"];
+
 const SDRS = [
-  "Pedro Roncalli","Thiago de Brito","Daniele Carvalho",
-  "Driele Rodrigues","Cida Gomes","Júnior Lima","Iara Jéssica"
+  "Pedro Roncalli","Thiago Mendonça","Daniele Carvalho",
+  "Driele Rodrigues","Maria Aparecida","Júnior Lima","Iara Jéssica"
 ];
 
 const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai:"Maio",jun:"Junho"};
@@ -250,6 +259,7 @@ const KPI_CONFIG = {
 
 let currentKpi="agendamentos", sdrQuery="", rangeFrom="jan", rangeTo="jun";
 let currentSort={key:"acumulado",dir:"desc"};
+let currentSize="all";
 
 function normalize(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
 function visibleMonths(){return MONTH_KEYS.slice(MONTH_KEYS.indexOf(rangeFrom),MONTH_KEYS.indexOf(rangeTo)+1);}
@@ -268,6 +278,25 @@ function heatClass(ratio,higherBetter){
     if(ratio<=85)  return "h-great"; if(ratio<=110) return "h-good";
     if(ratio<=130) return "h-warn";  return "h-bad";
   }
+}
+
+function computeMetricsSdr(nome,months,dataOverride){
+  const series=months.map(k=>({key:k,value:dataOverride[nome]?.[k]??null})).filter(s=>s.value!=null);
+  const acumulado=series.length?series.reduce((s,p)=>s+p.value,0)/series.length:null;
+  if(series.length<2) return {series,acumulado,trend:{type:"new",label:"Dados insuficientes",slope:null,proj:null}};
+  const last3=series.slice(-3);
+  let slope=last3.length===2?last3[1].value-last3[0].value:
+    ((last3[1].value-last3[0].value)+2*(last3[2].value-last3[1].value))/3;
+  const lastVal=series[series.length-1].value;
+  const proj=lastVal+slope;
+  const pctSlope=lastVal?(slope/lastVal)*100:0;
+  const strong=Math.abs(pctSlope)>=25;
+  const kpiCfg=KPI_CONFIG[currentKpi];
+  let type;
+  if(kpiCfg.higherBetter){type=pctSlope>kpiCfg.trendThreshold?"up":pctSlope<-kpiCfg.trendThreshold?"down":"flat";}
+  else{type=slope<-kpiCfg.trendThreshold?"up":slope>kpiCfg.trendThreshold?"down":"flat";}
+  const label=type==="up"?(strong?"Forte ascensão":"Ascensão"):type==="down"?(strong?"Queda acentuada":"Queda"):"Estável";
+  return {series,acumulado,trend:{type,label,slope,pctSlope,proj,strong}};
 }
 
 function computeMetrics(nome,kpi,months){
@@ -344,19 +373,19 @@ function renderHeader(months){
   });
 }
 
-function renderKPIs(list,months,kpi){
+function renderKPIs(list,months,kpi,effectiveData){
   const cfg=KPI_CONFIG[kpi];
   const lastM=months[months.length-1];
   const lastLabel=MONTH_LABELS[lastM]||"—";
-  const withLast=list.filter(n=>cfg.data[n]?.[lastM]!=null);
-  const vals=withLast.map(n=>cfg.data[n][lastM]);
+  const withLast=list.filter(n=>effectiveData[n]?.[lastM]!=null);
+  const vals=withLast.map(n=>effectiveData[n][lastM]);
   const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
-  const withTrend=list.map(n=>({n,m:computeMetrics(n,kpi,months)})).filter(x=>x.m.trend.slope!=null);
+  const withTrend=list.map(n=>({n,m:computeMetricsSdr(n,months,effectiveData)})).filter(x=>x.m.trend.slope!=null);
   const up=withTrend.filter(x=>x.m.trend.type==="up").length;
   const down=withTrend.filter(x=>x.m.trend.type==="down").length;
   const best=cfg.higherBetter
-    ?withLast.slice().sort((a,b)=>cfg.data[b][lastM]-cfg.data[a][lastM])[0]
-    :withLast.slice().sort((a,b)=>cfg.data[a][lastM]-cfg.data[b][lastM])[0];
+    ?withLast.slice().sort((a,b)=>effectiveData[b][lastM]-effectiveData[a][lastM])[0]
+    :withLast.slice().sort((a,b)=>effectiveData[a][lastM]-effectiveData[b][lastM])[0];
   const topRiser=withTrend.slice().sort((a,b)=>Math.abs(b.m.trend.pctSlope)-Math.abs(a.m.trend.pctSlope))[0];
   const bestLabel=cfg.higherBetter?"Maior":"Menor (melhor)";
   document.getElementById("kpis").innerHTML=`
@@ -389,9 +418,19 @@ function renderKPIs(list,months,kpi){
 }
 
 function renderAll(){
+  updatePorteVisibility();
   const months=visibleMonths();
   const cfg=KPI_CONFIG[currentKpi];
   renderHeader(months);
+
+  // Use porte-specific data for vendas tab
+  let effectiveData = cfg.data;
+  if(currentKpi==="vendas" && currentSize!=="all" && SDR_VENDAS_BY_PORTE[currentSize]){
+    effectiveData = SDR_VENDAS_BY_PORTE[currentSize];
+  } else if(currentKpi==="vendas" && currentSize==="all" && SDR_VENDAS_BY_PORTE["all"]){
+    effectiveData = SDR_VENDAS_BY_PORTE["all"];
+  }
+
   let list=SDRS.filter(n=>!sdrQuery.trim()||normalize(n).includes(normalize(sdrQuery.trim())));
   const avgs={};
   months.forEach(k=>{avgs[k]=teamAvg(currentKpi,k,list);});
@@ -413,7 +452,7 @@ function renderAll(){
     }
     return 0;
   });
-  renderKPIs(list.map(x=>x.nome),months,currentKpi);
+  renderKPIs(list.map(x=>x.nome),months,currentKpi,effectiveData);
   const body=document.getElementById("mainBody");
   if(!list.length){
     body.innerHTML=`<tr><td colspan="${3+months.length}" style="text-align:center;color:var(--muted);padding:28px;">Nenhum SDR encontrado.</td></tr>`;
@@ -421,7 +460,7 @@ function renderAll(){
   }
   body.innerHTML=list.map(({nome,_m})=>{
     const monthCells=months.map(mk=>{
-      const v=cfg.data[nome]?.[mk]??null;
+      const v=effectiveData[nome]?.[mk]??null;
       const avg=avgs[mk];
       const ratio=(v!=null&&avg)?(v/avg)*100:null;
       const pos=[...SDRS].filter(n=>cfg.data[n]?.[mk]!=null).sort((a,b)=>cfg.higherBetter?cfg.data[b][mk]-cfg.data[a][mk]:cfg.data[a][mk]-cfg.data[b][mk]).indexOf(nome)+1;
@@ -450,6 +489,17 @@ function renderAll(){
     } <strong>% No-show</strong> = (Agendamentos − Shows) ÷ Agendamentos × 100, derivado dos dados brutos — validado contra os valores de Janeiro do print (todos com diferença < 0,1 p.p.). Tendência usa inclinação ponderada com peso dobrado para a variação mais recente.`;
 }
 
+function populatePorteFilter(){
+  const sel=document.getElementById("porteFilter");
+  sel.innerHTML=SIZE_KEYS.map(k=>`<option value="${k}">${k==="all"?"Todos os portes":k}</option>`).join("");
+  sel.value=currentSize;
+  sel.addEventListener("change",()=>{currentSize=sel.value;renderAll();});
+}
+function updatePorteVisibility(){
+  const show = currentKpi==="vendas";
+  document.getElementById("porteFilterWrap").style.display = show ? "" : "none";
+}
+
 document.querySelectorAll("#kpiTabs .kpi-tab").forEach(tab=>{
   tab.addEventListener("click",()=>{
     document.querySelectorAll("#kpiTabs .kpi-tab").forEach(t=>t.classList.remove("active"));
@@ -464,6 +514,7 @@ document.querySelectorAll("#sortToggle .sort-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{currentSort.dir=btn.dataset.dir;updateSortToggleUI();renderAll();});
 });
 populateDateSelects();
+populatePorteFilter();
 updateSortToggleUI();
 renderAll();
 </script>

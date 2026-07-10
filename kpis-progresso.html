@@ -158,6 +158,9 @@ if(sessionStorage.getItem("suri_auth")!=="ok"){
       <input type="text" id="closerSearch" class="search-input" placeholder="Buscar closer...">
     </div>
     <div class="controls-right">
+      <div id="porteFilterWrap" style="display:none;">
+        <select id="porteFilter" style="font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:var(--blue-dark);border:1px solid var(--border);border-radius:18px;padding:7px 12px;background:var(--surface);cursor:pointer;outline:none;"></select>
+      </div>
       <div class="sort-toggle" id="sortToggle">
         <button class="sort-btn active" data-dir="desc">↓ Maior–Menor</button>
         <button class="sort-btn" data-dir="asc">↑ Menor–Maior</button>
@@ -300,6 +303,10 @@ const CICLO_LOST = {
   "Júnior Furtado":      {jan:null,fev:null,mar:null,abr:null,mai:35,jun:34},
 };
 
+const CONV_BY_PORTE = {"all":{"Brena Carvalho":{"jan":14.6,"fev":3.0,"mar":13.6,"abr":26.2,"mai":9.8,"jun":20.0},"Emerson Rocha":{"jan":6.5,"fev":20.6,"mar":15.4,"abr":22.9,"mai":2.3,"jun":12.5},"Clailton Nascimento":{"jan":24.5,"fev":25.0,"mar":15.2,"abr":9.7,"mai":18.0,"jun":22.6},"Lucas Machado":{"jan":37.9,"fev":55.6,"mar":25.0,"abr":17.5,"mai":11.8,"jun":14.0},"João Victor":{"jan":23.5,"fev":4.3,"mar":7.3,"abr":12.5,"mai":13.8,"jun":5.6},"Alex Uchôa":{"jan":5.7,"fev":6.1,"mar":4.5,"abr":12.8,"mai":4.7,"jun":14.6},"André Queiroz":{"jan":7.8,"fev":16.0,"mar":29.4,"abr":16.3,"mai":7.1,"jun":14.6},"Rafael Lima":{"jan":18.4,"fev":7.2,"mar":6.8,"abr":15.7,"mai":12.5,"jun":19.0},"Jéssika Lima":{"jan":17.1,"fev":7.8,"mar":9.3,"abr":18.8,"mai":10.4,"jun":19.1},"Patrício Felix":{"jan":20.7,"fev":20.0,"mar":1.8,"abr":40.7,"mai":8.2,"jun":23.1},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":12.5,"jun":15.4}},"De 1 a 2 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Emerson Rocha":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Clailton Nascimento":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Lucas Machado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":null,"fev":null,"mar":0.0,"abr":null,"mai":null,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"André Queiroz":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Rafael Lima":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Jéssika Lima":{"jan":null,"fev":null,"mar":0.0,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"Até 4 funcionários":{"Brena Carvalho":{"jan":0.0,"fev":0.0,"mar":33.3,"abr":null,"mai":null,"jun":null},"Emerson Rocha":{"jan":0.0,"fev":25.0,"mar":0.0,"abr":null,"mai":null,"jun":null},"Clailton Nascimento":{"jan":18.8,"fev":14.3,"mar":0.0,"abr":null,"mai":100.0,"jun":0.0},"Lucas Machado":{"jan":50.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":null,"jun":null},"João Victor":{"jan":33.3,"fev":0.0,"mar":0.0,"abr":0.0,"mai":null,"jun":null},"Alex Uchôa":{"jan":0.0,"fev":13.3,"mar":0.0,"abr":0.0,"mai":0.0,"jun":100.0},"André Queiroz":{"jan":12.5,"fev":0.0,"mar":0.0,"abr":0.0,"mai":null,"jun":null},"Rafael Lima":{"jan":23.8,"fev":10.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":null},"Jéssika Lima":{"jan":21.4,"fev":0.0,"mar":0.0,"abr":null,"mai":0.0,"jun":null},"Patrício Felix":{"jan":9.1,"fev":0.0,"mar":0.0,"abr":null,"mai":0.0,"jun":0.0},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0.0,"jun":null}},"De 3 a 5 funcionários":{"Brena Carvalho":{"jan":null,"fev":0.0,"mar":0.0,"abr":40.0,"mai":12.5,"jun":33.3},"Emerson Rocha":{"jan":null,"fev":0.0,"mar":0.0,"abr":28.6,"mai":0.0,"jun":0.0},"Clailton Nascimento":{"jan":null,"fev":null,"mar":13.3,"abr":18.2,"mai":20.8,"jun":71.4},"Lucas Machado":{"jan":null,"fev":50.0,"mar":33.3,"abr":22.2,"mai":0.0,"jun":27.3},"João Victor":{"jan":null,"fev":0.0,"mar":0.0,"abr":10.0,"mai":0.0,"jun":0.0},"Alex Uchôa":{"jan":null,"fev":null,"mar":0.0,"abr":11.1,"mai":0.0,"jun":8.3},"André Queiroz":{"jan":null,"fev":50.0,"mar":28.6,"abr":20.0,"mai":8.3,"jun":6.7},"Rafael Lima":{"jan":null,"fev":null,"mar":0.0,"abr":4.0,"mai":15.0,"jun":13.3},"Jéssika Lima":{"jan":null,"fev":100.0,"mar":0.0,"abr":25.0,"mai":23.1,"jun":25.0},"Patrício Felix":{"jan":null,"fev":null,"mar":0.0,"abr":50.0,"mai":14.3,"jun":14.3},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":16.7}},"De 5 a 7 funcionários":{"Brena Carvalho":{"jan":10.0,"fev":0.0,"mar":0.0,"abr":100.0,"mai":0.0,"jun":null},"Emerson Rocha":{"jan":7.1,"fev":16.7,"mar":20.0,"abr":25.0,"mai":0.0,"jun":null},"Clailton Nascimento":{"jan":40.0,"fev":25.0,"mar":100.0,"abr":0.0,"mai":null,"jun":null},"Lucas Machado":{"jan":42.9,"fev":50.0,"mar":25.0,"abr":25.0,"mai":0.0,"jun":0.0},"João Victor":{"jan":0.0,"fev":11.1,"mar":0.0,"abr":0.0,"mai":0.0,"jun":null},"Alex Uchôa":{"jan":6.2,"fev":10.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":null},"André Queiroz":{"jan":0.0,"fev":0.0,"mar":20.0,"abr":0.0,"mai":20.0,"jun":100.0},"Rafael Lima":{"jan":0.0,"fev":12.5,"mar":0.0,"abr":100.0,"mai":null,"jun":0.0},"Jéssika Lima":{"jan":0.0,"fev":0.0,"mar":16.7,"abr":0.0,"mai":0.0,"jun":0.0},"Patrício Felix":{"jan":23.1,"fev":22.2,"mar":0.0,"abr":0.0,"mai":0.0,"jun":33.3},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0.0,"jun":null}},"De 6 a 9 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":33.3,"abr":0.0,"mai":0.0,"jun":16.7},"Emerson Rocha":{"jan":null,"fev":0.0,"mar":25.0,"abr":25.0,"mai":0.0,"jun":0.0},"Clailton Nascimento":{"jan":null,"fev":100.0,"mar":16.7,"abr":25.0,"mai":7.7,"jun":0.0},"Lucas Machado":{"jan":null,"fev":100.0,"mar":100.0,"abr":0.0,"mai":0.0,"jun":0.0},"João Victor":{"jan":null,"fev":null,"mar":0.0,"abr":0.0,"mai":18.2,"jun":0.0},"Alex Uchôa":{"jan":null,"fev":null,"mar":16.7,"abr":12.5,"mai":6.7,"jun":0.0},"André Queiroz":{"jan":null,"fev":40.0,"mar":50.0,"abr":14.3,"mai":16.7,"jun":11.1},"Rafael Lima":{"jan":null,"fev":null,"mar":0.0,"abr":20.0,"mai":20.0,"jun":28.6},"Jéssika Lima":{"jan":null,"fev":null,"mar":25.0,"abr":50.0,"mai":7.7,"jun":9.1},"Patrício Felix":{"jan":null,"fev":null,"mar":0.0,"abr":40.0,"mai":6.7,"jun":42.9},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0.0,"jun":9.1}},"De 8 a 9 funcionários":{"Brena Carvalho":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":null},"Emerson Rocha":{"jan":0.0,"fev":0.0,"mar":null,"abr":0.0,"mai":100.0,"jun":null},"Clailton Nascimento":{"jan":33.3,"fev":33.3,"mar":0.0,"abr":0.0,"mai":0.0,"jun":50.0},"Lucas Machado":{"jan":25.0,"fev":0.0,"mar":25.0,"abr":0.0,"mai":null,"jun":null},"João Victor":{"jan":0.0,"fev":0.0,"mar":100.0,"abr":100.0,"mai":null,"jun":null},"Alex Uchôa":{"jan":28.6,"fev":0.0,"mar":0.0,"abr":null,"mai":0.0,"jun":0.0},"André Queiroz":{"jan":0.0,"fev":33.3,"mar":0.0,"abr":null,"mai":0.0,"jun":0.0},"Rafael Lima":{"jan":9.1,"fev":0.0,"mar":0.0,"abr":0.0,"mai":null,"jun":null},"Jéssika Lima":{"jan":25.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":0.0},"Patrício Felix":{"jan":11.1,"fev":0.0,"mar":0.0,"abr":0.0,"mai":null,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"De 10 a 49 funcionários":{"Brena Carvalho":{"jan":21.4,"fev":9.1,"mar":7.1,"abr":15.8,"mai":9.1,"jun":31.2},"Emerson Rocha":{"jan":8.3,"fev":22.2,"mar":18.2,"abr":25.0,"mai":0.0,"jun":28.6},"Clailton Nascimento":{"jan":10.0,"fev":30.8,"mar":21.4,"abr":0.0,"mai":12.5,"jun":12.5},"Lucas Machado":{"jan":42.9,"fev":83.3,"mar":9.1,"abr":20.8,"mai":26.7,"jun":14.3},"João Victor":{"jan":0.0,"fev":7.1,"mar":12.5,"abr":17.6,"mai":23.5,"jun":12.5},"Alex Uchôa":{"jan":0.0,"fev":0.0,"mar":4.8,"abr":18.8,"mai":5.6,"jun":33.3},"André Queiroz":{"jan":6.2,"fev":21.4,"mar":33.3,"abr":15.0,"mai":5.3,"jun":23.5},"Rafael Lima":{"jan":33.3,"fev":10.5,"mar":12.5,"abr":20.8,"mai":10.0,"jun":19.2},"Jéssika Lima":{"jan":25.0,"fev":14.3,"mar":10.5,"abr":25.0,"mai":14.3,"jun":31.6},"Patrício Felix":{"jan":40.0,"fev":40.0,"mar":0.0,"abr":50.0,"mai":5.6,"jun":23.1},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":33.3,"jun":33.3}},"De 50 a 99 funcionários":{"Brena Carvalho":{"jan":66.7,"fev":0.0,"mar":50.0,"abr":25.0,"mai":33.3,"jun":0.0},"Emerson Rocha":{"jan":0.0,"fev":0.0,"mar":null,"abr":0.0,"mai":0.0,"jun":33.3},"Clailton Nascimento":{"jan":33.3,"fev":0.0,"mar":0.0,"abr":null,"mai":50.0,"jun":0.0},"Lucas Machado":{"jan":null,"fev":100.0,"mar":0.0,"abr":25.0,"mai":0.0,"jun":25.0},"João Victor":{"jan":66.7,"fev":0.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":0.0},"Alex Uchôa":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":null},"André Queiroz":{"jan":0.0,"fev":0.0,"mar":100.0,"abr":40.0,"mai":0.0,"jun":null},"Rafael Lima":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":33.3,"mai":16.7,"jun":0.0},"Jéssika Lima":{"jan":0.0,"fev":0.0,"mar":null,"abr":0.0,"mai":0.0,"jun":0.0},"Patrício Felix":{"jan":0.0,"fev":50.0,"mar":100.0,"abr":100.0,"mai":100.0,"jun":0.0},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":0.0}},"Mais de 100 funcionários":{"Brena Carvalho":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":50.0,"mai":16.7,"jun":0.0},"Emerson Rocha":{"jan":33.3,"fev":66.7,"mar":0.0,"abr":20.0,"mai":0.0,"jun":0.0},"Clailton Nascimento":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":0.0},"Lucas Machado":{"jan":0.0,"fev":null,"mar":25.0,"abr":25.0,"mai":0.0,"jun":0.0},"João Victor":{"jan":25.0,"fev":0.0,"mar":0.0,"abr":null,"mai":40.0,"jun":null},"Alex Uchôa":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":12.5,"jun":0.0},"André Queiroz":{"jan":16.7,"fev":0.0,"mar":null,"abr":0.0,"mai":0.0,"jun":0.0},"Rafael Lima":{"jan":0.0,"fev":0.0,"mar":100.0,"abr":0.0,"mai":0.0,"jun":66.7},"Jéssika Lima":{"jan":null,"fev":33.3,"mar":0.0,"abr":0.0,"mai":0.0,"jun":0.0},"Patrício Felix":{"jan":0.0,"fev":0.0,"mar":0.0,"abr":0.0,"mai":0.0,"jun":33.3},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"Não informado":{"Brena Carvalho":{"jan":null,"fev":0.0,"mar":null,"abr":100.0,"mai":0.0,"jun":0.0},"Emerson Rocha":{"jan":null,"fev":0.0,"mar":null,"abr":0.0,"mai":null,"jun":null},"Clailton Nascimento":{"jan":33.3,"fev":0.0,"mar":null,"abr":null,"mai":0.0,"jun":0.0},"Lucas Machado":{"jan":0.0,"fev":0.0,"mar":50.0,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":50.0,"fev":null,"mar":null,"abr":null,"mai":0.0,"jun":0.0},"Alex Uchôa":{"jan":null,"fev":null,"mar":0.0,"abr":null,"mai":0.0,"jun":0.0},"André Queiroz":{"jan":25.0,"fev":null,"mar":null,"abr":null,"mai":0.0,"jun":0.0},"Rafael Lima":{"jan":66.7,"fev":0.0,"mar":0.0,"abr":100.0,"mai":0.0,"jun":0.0},"Jéssika Lima":{"jan":100.0,"fev":50.0,"mar":null,"abr":null,"mai":null,"jun":0.0},"Patrício Felix":{"jan":33.3,"fev":null,"mar":0.0,"abr":null,"mai":0.0,"jun":0.0},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0.0,"jun":0.0}}};
+const CVENDA_BY_PORTE = {"all":{"Brena Carvalho":{"jan":1,"fev":7,"mar":5,"abr":1,"mai":13,"jun":2},"Emerson Rocha":{"jan":3,"fev":2,"mar":3,"abr":5,"mai":1,"jun":3},"Clailton Nascimento":{"jan":3,"fev":2,"mar":4,"abr":2,"mai":2,"jun":2},"Lucas Machado":{"jan":3,"fev":3,"mar":2,"abr":3,"mai":2,"jun":4},"João Victor":{"jan":1,"fev":0,"mar":2,"abr":4,"mai":3,"jun":0},"Alex Uchôa":{"jan":1,"fev":3,"mar":2,"abr":2,"mai":0,"jun":2},"André Queiroz":{"jan":2,"fev":1,"mar":1,"abr":1,"mai":1,"jun":6},"Rafael Lima":{"jan":1,"fev":1,"mar":4,"abr":5,"mai":6,"jun":2},"Jéssika Lima":{"jan":1,"fev":2,"mar":1,"abr":2,"mai":1,"jun":2},"Patrício Felix":{"jan":1,"fev":5,"mar":0,"abr":1,"mai":2,"jun":4},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0,"jun":2}},"De 1 a 2 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Emerson Rocha":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Clailton Nascimento":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Lucas Machado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"André Queiroz":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Rafael Lima":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Jéssika Lima":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"Até 4 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":12,"abr":null,"mai":null,"jun":null},"Emerson Rocha":{"jan":null,"fev":2,"mar":null,"abr":null,"mai":null,"jun":null},"Clailton Nascimento":{"jan":6,"fev":5,"mar":null,"abr":null,"mai":0,"jun":null},"Lucas Machado":{"jan":2,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":0,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Alex Uchôa":{"jan":null,"fev":2,"mar":null,"abr":null,"mai":null,"jun":9},"André Queiroz":{"jan":0,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Rafael Lima":{"jan":0,"fev":0,"mar":null,"abr":null,"mai":null,"jun":null},"Jéssika Lima":{"jan":1,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":1,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"De 3 a 5 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":null,"abr":2,"mai":0,"jun":3},"Emerson Rocha":{"jan":null,"fev":null,"mar":null,"abr":0,"mai":null,"jun":null},"Clailton Nascimento":{"jan":null,"fev":null,"mar":7,"abr":2,"mai":2,"jun":2},"Lucas Machado":{"jan":null,"fev":0,"mar":1,"abr":7,"mai":null,"jun":4},"João Victor":{"jan":null,"fev":null,"mar":null,"abr":1,"mai":null,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":null,"abr":4,"mai":null,"jun":3},"André Queiroz":{"jan":null,"fev":0,"mar":2,"abr":0,"mai":2,"jun":1},"Rafael Lima":{"jan":null,"fev":null,"mar":null,"abr":5,"mai":1,"jun":2},"Jéssika Lima":{"jan":null,"fev":4,"mar":null,"abr":0,"mai":0,"jun":1},"Patrício Felix":{"jan":null,"fev":null,"mar":null,"abr":0,"mai":1,"jun":4},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":1}},"De 5 a 7 funcionários":{"Brena Carvalho":{"jan":0,"fev":null,"mar":null,"abr":0,"mai":null,"jun":null},"Emerson Rocha":{"jan":3,"fev":0,"mar":10,"abr":0,"mai":null,"jun":null},"Clailton Nascimento":{"jan":2,"fev":1,"mar":3,"abr":null,"mai":null,"jun":null},"Lucas Machado":{"jan":2,"fev":0,"mar":7,"abr":0,"mai":null,"jun":null},"João Victor":{"jan":null,"fev":0,"mar":null,"abr":null,"mai":null,"jun":null},"Alex Uchôa":{"jan":1,"fev":6,"mar":null,"abr":null,"mai":null,"jun":null},"André Queiroz":{"jan":null,"fev":null,"mar":0,"abr":null,"mai":1,"jun":0},"Rafael Lima":{"jan":null,"fev":2,"mar":null,"abr":2,"mai":null,"jun":null},"Jéssika Lima":{"jan":null,"fev":null,"mar":0,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":2,"fev":8,"mar":null,"abr":null,"mai":null,"jun":1},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"De 6 a 9 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":1,"abr":null,"mai":null,"jun":3},"Emerson Rocha":{"jan":null,"fev":null,"mar":1,"abr":2,"mai":null,"jun":null},"Clailton Nascimento":{"jan":null,"fev":0,"mar":4,"abr":1,"mai":0,"jun":null},"Lucas Machado":{"jan":null,"fev":1,"mar":1,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":2,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":3,"abr":2,"mai":0,"jun":null},"André Queiroz":{"jan":null,"fev":2,"mar":0,"abr":1,"mai":0,"jun":0},"Rafael Lima":{"jan":null,"fev":null,"mar":null,"abr":12,"mai":14,"jun":2},"Jéssika Lima":{"jan":null,"fev":null,"mar":1,"abr":1,"mai":0,"jun":1},"Patrício Felix":{"jan":null,"fev":null,"mar":null,"abr":2,"mai":7,"jun":2},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":2}},"De 8 a 9 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Emerson Rocha":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":1,"jun":null},"Clailton Nascimento":{"jan":2,"fev":0,"mar":null,"abr":null,"mai":null,"jun":6},"Lucas Machado":{"jan":10,"fev":null,"mar":0,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":null,"fev":null,"mar":1,"abr":0,"mai":null,"jun":null},"Alex Uchôa":{"jan":0,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"André Queiroz":{"jan":null,"fev":3,"mar":null,"abr":null,"mai":null,"jun":null},"Rafael Lima":{"jan":4,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Jéssika Lima":{"jan":1,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":2,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"De 10 a 49 funcionários":{"Brena Carvalho":{"jan":2,"fev":7,"mar":5,"abr":0,"mai":15,"jun":1},"Emerson Rocha":{"jan":4,"fev":4,"mar":0,"abr":1,"mai":null,"jun":4},"Clailton Nascimento":{"jan":1,"fev":2,"mar":2,"abr":null,"mai":5,"jun":0},"Lucas Machado":{"jan":4,"fev":1,"mar":0,"abr":3,"mai":2,"jun":2},"João Victor":{"jan":null,"fev":0,"mar":3,"abr":6,"mai":0,"jun":0},"Alex Uchôa":{"jan":null,"fev":null,"mar":0,"abr":2,"mai":0,"jun":0},"André Queiroz":{"jan":0,"fev":1,"mar":0,"abr":1,"mai":0,"jun":10},"Rafael Lima":{"jan":0,"fev":1,"mar":2,"abr":3,"mai":2,"jun":2},"Jéssika Lima":{"jan":3,"fev":1,"mar":1,"abr":3,"mai":2,"jun":2},"Patrício Felix":{"jan":0,"fev":4,"mar":null,"abr":2,"mai":1,"jun":1},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0,"jun":2}},"De 50 a 99 funcionários":{"Brena Carvalho":{"jan":1,"fev":null,"mar":10,"abr":2,"mai":36,"jun":null},"Emerson Rocha":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":0},"Clailton Nascimento":{"jan":1,"fev":null,"mar":null,"abr":null,"mai":2,"jun":null},"Lucas Machado":{"jan":null,"fev":12,"mar":null,"abr":1,"mai":null,"jun":10},"João Victor":{"jan":2,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"André Queiroz":{"jan":null,"fev":null,"mar":2,"abr":0,"mai":null,"jun":null},"Rafael Lima":{"jan":null,"fev":null,"mar":null,"abr":4,"mai":15,"jun":null},"Jéssika Lima":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":null,"fev":4,"mar":0,"abr":0,"mai":0,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"Mais de 100 funcionários":{"Brena Carvalho":{"jan":null,"fev":null,"mar":null,"abr":1,"mai":1,"jun":null},"Emerson Rocha":{"jan":3,"fev":3,"mar":null,"abr":35,"mai":null,"jun":null},"Clailton Nascimento":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Lucas Machado":{"jan":null,"fev":null,"mar":7,"abr":0,"mai":null,"jun":null},"João Victor":{"jan":0,"fev":null,"mar":null,"abr":null,"mai":8,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":0,"jun":null},"André Queiroz":{"jan":3,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Rafael Lima":{"jan":null,"fev":null,"mar":7,"abr":null,"mai":null,"jun":1},"Jéssika Lima":{"jan":null,"fev":1,"mar":null,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":23},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}},"Não informado":{"Brena Carvalho":{"jan":null,"fev":null,"mar":null,"abr":0,"mai":null,"jun":null},"Emerson Rocha":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Clailton Nascimento":{"jan":7,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Lucas Machado":{"jan":null,"fev":null,"mar":0,"abr":null,"mai":null,"jun":null},"João Victor":{"jan":0,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Alex Uchôa":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"André Queiroz":{"jan":7,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Rafael Lima":{"jan":2,"fev":null,"mar":null,"abr":4,"mai":null,"jun":null},"Jéssika Lima":{"jan":0,"fev":1,"mar":null,"abr":null,"mai":null,"jun":null},"Patrício Felix":{"jan":3,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null},"Júnior Furtado":{"jan":null,"fev":null,"mar":null,"abr":null,"mai":null,"jun":null}}};
+const SIZE_KEYS = ["all","De 1 a 2 funcionários","Até 4 funcionários","De 3 a 5 funcionários","De 5 a 7 funcionários","De 6 a 9 funcionários","De 8 a 9 funcionários","De 10 a 49 funcionários","De 50 a 99 funcionários","Mais de 100 funcionários","Não informado"];
+
 const CLOSERS = [
   {nome:"Brena Carvalho",      time:"TITANS"},
   {nome:"Emerson Rocha",       time:"MAORI"},
@@ -376,6 +383,7 @@ let closerQuery = "";
 let rangeFrom = "jan";
 let rangeTo = "jun";
 let currentSort = {key:"acumulado", dir:"desc"};
+let currentSize = "all";
 
 function normalize(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
 function visibleMonths(){
@@ -384,8 +392,9 @@ function visibleMonths(){
 }
 
 /* ===================== CÁLCULOS ===================== */
-function teamAvgForMonth(kpi, month, list){
-  const vals = list.map(c=>KPI_CONFIG[kpi].data[c.nome]?.[month]).filter(v=>v!=null);
+function teamAvgForMonth(kpi, month, list, dataOverride){
+  const src = dataOverride || KPI_CONFIG[kpi].data;
+  const vals = list.map(c=>src[c.nome]?.[month]).filter(v=>v!=null);
   return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
 }
 
@@ -459,6 +468,20 @@ function sparklineSVG(series){
 function trendArrow(type){return type==="up"?"↑":type==="down"?"↓":type==="flat"?"→":"•";}
 
 /* ===================== POPULATE DATE SELECTS ===================== */
+function populatePorteFilter(){
+  const sel = document.getElementById("porteFilter");
+  sel.innerHTML = SIZE_KEYS.map(k =>
+    `<option value="${k}">${k==="all"?"Todos os portes":k}</option>`
+  ).join("");
+  sel.value = currentSize;
+  sel.addEventListener("change", ()=>{ currentSize = sel.value; renderAll(); });
+}
+
+function updatePorteFilterVisibility(){
+  const visible = (currentKpi === "conversao" || currentKpi === "ciclovenda");
+  document.getElementById("porteFilterWrap").style.display = visible ? "" : "none";
+}
+
 function populateDateSelects(){
   const fromSel=document.getElementById("dateFrom"), toSel=document.getElementById("dateTo");
   fromSel.innerHTML=MONTH_KEYS.map(k=>`<option value="${k}">${MONTH_LABELS[k]}</option>`).join("");
@@ -491,22 +514,23 @@ function renderLegend(kpi){
 }
 
 /* ===================== RENDER KPIs ===================== */
-function renderKPIs(list, months, kpi){
+function renderKPIs(list, months, kpi, effectiveData){
   const cfg=KPI_CONFIG[kpi];
   const lastM=months[months.length-1];
   const lastLabel=lastM?MONTH_LABELS[lastM]:"—";
-  const withLast=list.filter(c=>cfg.data[c.nome]?.[lastM]!=null);
-  const vals=withLast.map(c=>cfg.data[c.nome][lastM]);
+  const src=effectiveData||cfg.data;
+  const withLast=list.filter(c=>src[c.nome]?.[lastM]!=null);
+  const vals=withLast.map(c=>src[c.nome][lastM]);
   const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
 
-  const withTrend=list.map(c=>({c,m:computeMetrics(c.nome,kpi,months)})).filter(x=>x.m.trend.slope!=null);
+  const withTrend=list.map(c=>({c,m:computeMetrics(c.nome,kpi,months,src)})).filter(x=>x.m.trend.slope!=null);
   const up=withTrend.filter(x=>x.m.trend.type==="up").length;
   const down=withTrend.filter(x=>x.m.trend.type==="down").length;
 
   const topRiser=withTrend.slice().sort((a,b)=>Math.abs(b.m.trend.pctSlope)-Math.abs(a.m.trend.pctSlope))[0];
   const best=cfg.higherBetter
-    ?withLast.slice().sort((a,b)=>cfg.data[b.nome][lastM]-cfg.data[a.nome][lastM])[0]
-    :withLast.slice().sort((a,b)=>cfg.data[a.nome][lastM]-cfg.data[b.nome][lastM])[0];
+    ?withLast.slice().sort((a,b)=>src[b.nome][lastM]-src[a.nome][lastM])[0]
+    :withLast.slice().sort((a,b)=>src[a.nome][lastM]-src[b.nome][lastM])[0];
 
   const bestLabel=cfg.higherBetter?"Maior":"Menor (melhor)";
 
@@ -558,6 +582,20 @@ function renderHeader(months){
 
 /* ===================== RENDER TABLE ===================== */
 function renderAll(){
+  updatePorteFilterVisibility();
+
+  // Override data source with porte-specific data if applicable
+  const kpiCfg = KPI_CONFIG[currentKpi];
+  let effectiveData = kpiCfg.data;
+  let porteNote = "";
+  if(currentKpi === "conversao" && currentSize !== "all"){
+    effectiveData = CONV_BY_PORTE[currentSize] || kpiCfg.data;
+    porteNote = `<span style="font-size:11px;color:var(--amber);font-weight:600;margin-left:8px;">⚠ Filtrado por porte: taxa won/(won+lost) do Pipedrive</span>`;
+  } else if(currentKpi === "ciclovenda" && currentSize !== "all"){
+    effectiveData = CVENDA_BY_PORTE[currentSize] || kpiCfg.data;
+    porteNote = `<span style="font-size:11px;color:var(--amber);font-weight:600;margin-left:8px;">⚠ Filtrado por porte: ciclo calculado do Pipedrive</span>`;
+  }
+
   if(currentKpi==="desconto"){
     document.getElementById("mainView").style.display="none";
     document.getElementById("pendingView").style.display="";
@@ -581,16 +619,16 @@ function renderAll(){
   }
 
   const avgs={};
-  months.forEach(k=>{ avgs[k]=teamAvgForMonth(currentKpi,k,list); });
+  months.forEach(k=>{ avgs[k]=teamAvgForMonth(currentKpi,k,list,effectiveData); });
 
-  list=list.map(c=>({...c, _m:computeMetrics(c.nome,currentKpi,months)}));
+  list=list.map(c=>({...c, _m:computeMetrics(c.nome,currentKpi,months,effectiveData)}));
 
   const k=currentSort.key, dir=currentSort.dir==="asc"?1:-1;
   list.sort((a,b)=>{
     if(k==="nome") return dir*a.nome.localeCompare(b.nome);
     if(k==="time") return dir*a.time.localeCompare(b.time);
     if(months.includes(k)){
-      const va=cfg.data[a.nome]?.[k]??-1, vb=cfg.data[b.nome]?.[k]??-1;
+      const va=effectiveData[a.nome]?.[k]??-1, vb=effectiveData[b.nome]?.[k]??-1;
       return dir*(va-vb);
     }
     if(k==="tendencia"){
@@ -604,7 +642,7 @@ function renderAll(){
     return 0;
   });
 
-  renderKPIs(list, months, currentKpi);
+  renderKPIs(list, months, currentKpi, effectiveData);
 
   const body=document.getElementById("mainBody");
   if(list.length===0){
@@ -614,7 +652,7 @@ function renderAll(){
 
   body.innerHTML=list.map(c=>{
     const monthCells=months.map(mk=>{
-      const v=cfg.data[c.nome]?.[mk]??null;
+      const v=effectiveData[c.nome]?.[mk]??null;
       const avg=avgs[mk];
       const ratio=(v!=null&&avg)?( (v/avg)*100 ):null;
       // Rich tooltip: explain the "why" behind each value
@@ -624,24 +662,24 @@ function renderAll(){
       } else if(currentKpi==="ticket"){
         const rec = RECEITA[c.nome]?.[mk];
         const vnd = VENDAS[c.nome]?.[mk];
-        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[b.nome][mk]-cfg.data[a.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
-        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        const pos = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).sort((a,b)=>effectiveData[b.nome][mk]-effectiveData[a.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).length;
         title = `Ticket: ${cfg.fmt(v)}\nReceita: ${fmtBRL(rec)} ÷ ${vnd} vendas\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking no mês: ${pos}º de ${total}`;
       } else if(currentKpi==="conversao"){
         const vnd = VENDAS[c.nome]?.[mk];
         const reu = REUNIOES[c.nome]?.[mk];
-        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[b.nome][mk]-cfg.data[a.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
-        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        const pos = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).sort((a,b)=>effectiveData[b.nome][mk]-effectiveData[a.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).length;
         title = `Conversão: ${cfg.fmt(v)}\n${vnd} vendas ÷ ${reu} reuniões\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking no mês: ${pos}º de ${total}`;
       } else if(currentKpi==="ciclovenda"){
-        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[a.nome][mk]-cfg.data[b.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
-        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        const pos = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).sort((a,b)=>effectiveData[a.nome][mk]-effectiveData[b.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).length;
         const diff = avg ? v - avg : null;
         const diffStr = diff==null ? "" : (diff>0 ? ` (+${Math.round(diff)} dias acima da média)` : ` (${Math.round(diff)} dias abaixo da média)`);
         title = `Ciclo de Venda: ${v} dias${diffStr}\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking (menor=melhor): ${pos}º de ${total}`;
       } else if(currentKpi==="ciclolost"){
-        const pos = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).sort((a,b)=>cfg.data[a.nome][mk]-cfg.data[b.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
-        const total = [...monthList].filter(n=>cfg.data[n.nome]?.[mk]!=null).length;
+        const pos = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).sort((a,b)=>effectiveData[a.nome][mk]-effectiveData[b.nome][mk]).findIndex(n=>n.nome===c.nome)+1;
+        const total = [...monthList].filter(n=>effectiveData[n.nome]?.[mk]!=null).length;
         const diff = avg ? v - avg : null;
         const diffStr = diff==null ? "" : (diff>0 ? ` (+${Math.round(diff)} dias acima da média)` : ` (${Math.round(diff)} dias abaixo da média)`);
         title = `Ciclo de Lost: ${v} dias${diffStr}\nMédia do time: ${cfg.fmtAvg(avg)}\nRanking (menor=melhor): ${pos}º de ${total}`;
@@ -701,6 +739,7 @@ document.querySelectorAll("#sortToggle .sort-btn").forEach(btn=>{
 });
 
 populateDateSelects();
+populatePorteFilter();
 updateSortToggleUI();
 renderAll();
 </script>
