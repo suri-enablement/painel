@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suri · Desempenho por porte</title>
-<script>if(sessionStorage.getItem("suri_auth")!=="ok"){location.replace("login.html");}</script>
+<title>Suri · Desempenho por Porte</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--blue:#3d5af1;--blue-dark:#2a3fc4;--blue-bg:#eef1ff;--page-bg:#eef3ff;--surface:#fff;--ink:#101a33;--muted:#5b6480;--border:#dfe5f8;--green:#0fa968;--green-bg:#e3f8ef;--amber:#b45309;--amber-bg:#fef3c7;--pink-text:#c11574;--pink-bg:#ffe4f3;--gold:#caa202;}
@@ -138,8 +137,8 @@ select.cs{font-family:'Sora',sans-serif;border:1px solid var(--border);border-ra
     <div style="margin-left:auto;">
       <div class="pill-group" id="viewToggle">
         <button class="pill-btn active" data-view="matrix">Matriz</button>
-        <button class="pill-btn" data-view="bars">Barras</button>
-        <button class="pill-btn" data-view="bullet">Progresso</button>
+        <button class="pill-btn" data-view="bars">Barras Agrupadas</button>
+        <button class="pill-btn" data-view="bullet">Análise por Porte</button>
       </div>
     </div>
   </div>
@@ -175,8 +174,8 @@ select.cs{font-family:'Sora',sans-serif;border:1px solid var(--border);border-ra
   <div id="bulletView" style="display:none">
     <div class="chart-panel">
       <div class="chart-hd">
-        <div><h2>Progresso por Closer — barras por porte</h2>
-        <p>Selecione um ou mais closers · cada grupo de barras = um porte · linha dourada = média do time</p></div>
+        <div><h2>Desempenho por Porte — comparativo entre closers</h2>
+        <p>Cada gráfico = um segmento de empresa · cada barra = um closer · linha dourada = média do time no segmento</p></div>
         <div style="font-size:12px;font-weight:600;color:var(--muted);">
           Período: <span id="bulletPeriodLabel" style="color:var(--blue-dark);font-weight:700;"></span>
           <br><span style="font-size:10.5px;font-weight:500">(altere o filtro no topo da página)</span>
@@ -366,8 +365,8 @@ function renderBullet(){
     const totalWon=sel.reduce((a,c)=>{const d=cd[c]?.[s];return a+(d?.won||0);},0);
 
     return`<div class="vbar-chart">
-      <div class="vbar-title">${s.replace(' funcionários','').replace('100 ou mais','100+')}</div>
-      <div class="vbar-sub">Média do time: ${fP(avgPct)} · ${tv.shows} shows totais</div>
+      <div class="vbar-title">${s}</div>
+      <div class="vbar-sub">Média do time: ${fP(avgPct)} · ${tv.shows} shows · ${fR(tv.receita||0)}</div>
       <div class="vbar-area">
         ${bars}
         <div class="vbar-avg-line" style="bottom:${avgH}px">
