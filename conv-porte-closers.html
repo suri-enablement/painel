@@ -100,20 +100,20 @@ select.cs{font-family:'Sora',sans-serif;border:1px solid var(--border);border-ra
 .cb-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-size:10px;font-weight:800;border-radius:10px;padding:1px 6px;margin-left:6px;}
 
 /* CHARTS GRID */
-.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px;}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:16px;}
 .hbar-chart{background:#fafbff;border:1px solid var(--border);border-radius:14px;padding:20px 20px 16px;}
-.hbar-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;}
-.hbar-sub{font-size:11px;color:var(--muted);margin-bottom:16px;}
-.hbar-avg-tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;color:var(--gold);background:#fff8e1;border:1px solid var(--gold);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;}
+.hbar-title{font-size:0.85rem;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.hbar-sub{font-size:0.72rem;color:var(--muted);margin-bottom:16px;}
+.hbar-avg-tag{display:inline-flex;align-items:center;gap:4px;font-size:0.68rem;font-weight:700;color:var(--gold);background:#fff8e1;border:1px solid var(--gold);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;}
 .hbar-rows{display:flex;flex-direction:column;gap:7px;}
-.hbar-row{display:grid;grid-template-columns:120px 1fr 56px;align-items:center;gap:10px;}
-.hbar-name{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
-.hbar-track{height:22px;background:#eef1f9;border-radius:5px;position:relative;overflow:hidden;}
+.hbar-row{display:grid;grid-template-columns:clamp(80px,18%,130px) 1fr clamp(40px,7%,60px);align-items:center;gap:8px;}
+.hbar-name{font-size:0.8rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
+.hbar-track{height:clamp(18px,2.2vh,26px);background:#eef1f9;border-radius:5px;position:relative;overflow:hidden;}
 .hbar-fill{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;transition:width .45s cubic-bezier(.4,0,.2,1);position:relative;}
-.hbar-fill .hp{font-size:11px;font-weight:800;color:#fff;white-space:nowrap;}
+.hbar-fill .hp{font-size:0.72rem;font-weight:800;color:#fff;white-space:nowrap;}
 .hbar-fill.lo .hp{display:none;}
-.hbar-ext{position:absolute;left:calc(100% + 5px);top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:var(--ink);white-space:nowrap;}
-.hbar-pct{font-size:12px;font-weight:800;color:var(--ink);text-align:right;}
+.hbar-ext{position:absolute;left:calc(100% + 5px);top:50%;transform:translateY(-50%);font-size:0.72rem;font-weight:700;color:var(--ink);white-space:nowrap;}
+.hbar-pct{font-size:0.78rem;font-weight:800;color:var(--ink);text-align:right;}
 .hbar-avg-line{position:absolute;top:0;bottom:0;width:2px;background:var(--gold);z-index:2;border-radius:1px;}
 .hbar-divider{height:1px;background:var(--border);margin:4px 0;}
 .no-selection{text-align:center;padding:40px;color:var(--muted);font-size:13px;}
@@ -232,7 +232,6 @@ select.cs{font-family:'Sora',sans-serif;border:1px solid var(--border);border-ra
     <div style="margin-left:auto;">
       <div class="pill-group" id="viewToggle">
         <button class="pill-btn active" data-view="matrix">Matriz</button>
-        <button class="pill-btn" data-view="bars">Barras Agrupadas</button>
         <button class="pill-btn" data-view="bullet">Análise por Porte</button>
       </div>
     </div>
@@ -256,17 +255,7 @@ select.cs{font-family:'Sora',sans-serif;border:1px solid var(--border);border-ra
     </div>
   </div>
 
-  <div id="barsView" style="display:none">
-    <div class="chart-panel">
-      <div class="chart-hd">
-        <div><h2>Barras por Porte — visão do time</h2>
-        <p>Closers ordenados pelo maior % dentro de cada porte</p></div>
-      </div>
-      <div id="barsContent"></div>
-    </div>
-  </div>
-
-  <div id="bulletView" style="display:none">
+    <div id="bulletView" style="display:none">
     <div class="chart-panel">
       <div class="chart-hd">
         <div><h2>Desempenho por Porte — comparativo entre closers</h2>
@@ -383,32 +372,6 @@ function renderMatrix(){
     <span class="c-rec">${hasReceita?fR(sz().reduce((a,s)=>a+(t[s]?.receita||0),0)):"—"}</span>
     <span class="c-sh">${sz().reduce((a,s)=>a+(t[s]?.shows||0),0)} shows</span>
   </span></td></tr>`;
-}
-
-function renderBars(){
-  const {data,hasConv,hasReceita}=pd(); const cd=data.closers,t=data.team;
-  document.getElementById("barsContent").innerHTML=sz().map(s=>{
-    const tv=t[s]||{shows:0,won:0,receita:0};const tP=pct(tv.won,tv.shows);
-    const sorted=CLOSERS.map(c=>({c,d:cd[c]?.[s]||{shows:0,won:0,receita:0}}))
-      .sort((a,b)=>(pct(b.d.won,b.d.shows)||0)-(pct(a.d.won,a.d.shows)||0));
-    const bars=sorted.map(({c,d})=>{
-      if(d.shows===0&&d.won===0)return"";
-      const p=pct(d.won,d.shows)||0;const w=Math.min(p,100);const lo=w<15;
-      const color=COLORS[CLOSERS.indexOf(c)];
-      return`<div class="bar-row">
-        <div class="bar-name" title="${c}">${c.split(" ")[0]} ${c.split(" ").slice(-1)[0]}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:${Math.max(w,.5)}%;background:${color}">
-            <span class="bv">${lo?"":p.toFixed(1).replace(".",",")+"%"}</span>
-          </div>
-          ${lo?`<span class="bar-ext" style="left:${w+1}%">${p.toFixed(1).replace(".",",")+"%"}</span>`:""}
-        </div>
-        <div class="bar-meta">${hasReceita?fR(d.receita):`${d.won} vd`}</div>
-      </div>`;
-    }).join("");
-    if(!bars.trim())return"";
-    return`<div class="bar-group"><div class="bar-ghd">${s}<span class="tt">time: ${fP(tP)} · ${hasReceita?fR(tv.receita):tv.won+" vd"}</span></div>${bars}</div>`;
-  }).join("");
 }
 
 let selectedClosers = new Set(CLOSERS); // all selected by default
