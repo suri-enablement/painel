@@ -155,31 +155,31 @@
    todos com diferença < 0,1 p.p. Vendas = coluna "QTD DE VENDAS". */
 
 const AGENDAMENTOS = {
-  "Pedro Roncalli":   {jan:92, fev:83, mar:72, abr:83, mai:110, jun:107},
-  "Thiago de Brito":  {jan:96, fev:60, mar:73, abr:90, mai:121, jun:110},
-  "Daniele Carvalho": {jan:91, fev:92, mar:76, abr:41, mai:108, jun:104},
-  "Driele Rodrigues": {jan:70, fev:65, mar:64, abr:78, mai:105, jun:97},
-  "Cida Gomes":       {jan:69, fev:79, mar:75, abr:76, mai:99,  jun:79},
-  "Júnior Lima":      {jan:74, fev:46, mar:49, abr:74, mai:86,  jun:91},
+  "Pedro Roncalli":   {jan:92, fev:83, mar:72, abr:83, mai:110, jun:107, jul:106},
+  "Thiago de Brito":  {jan:96, fev:60, mar:73, abr:90, mai:121, jun:110, jul:95},
+  "Daniele Carvalho": {jan:91, fev:92, mar:76, abr:41, mai:108, jun:104, jul:95},
+  "Driele Rodrigues": {jan:70, fev:65, mar:64, abr:78, mai:105, jun:97, jul:54},
+  "Cida Gomes":       {jan:69, fev:79, mar:75, abr:76, mai:99,  jun:79, jul:86, jul:78},
+  "Júnior Lima":      {jan:74, fev:46, mar:49, abr:74, mai:86,  jun:91, jul:79},
   "Iara Jéssica":    {jan:59, fev:41, mar:83, abr:72, mai:72,  jun:79},
 };
 
 const SHOWS = {
-  "Pedro Roncalli":   {jan:74, fev:69, mar:63, abr:75, mai:95, jun:94},
-  "Thiago de Brito":  {jan:71, fev:51, mar:57, abr:64, mai:98, jun:90},
+  "Pedro Roncalli":   {jan:74, fev:69, mar:63, abr:75, mai:95, jun:94, jul:87, jul:97},
+  "Thiago de Brito":  {jan:71, fev:51, mar:57, abr:64, mai:98, jun:90, jul:75},
   "Daniele Carvalho": {jan:63, fev:71, mar:64, abr:30, mai:87, jun:94},
-  "Driele Rodrigues": {jan:55, fev:59, mar:47, abr:74, mai:84, jun:78},
-  "Cida Gomes":       {jan:59, fev:69, mar:58, abr:68, mai:85, jun:69},
-  "Júnior Lima":      {jan:55, fev:42, mar:41, abr:62, mai:73, jun:73},
-  "Iara Jéssica":    {jan:45, fev:36, mar:70, abr:58, mai:69, jun:77},
+  "Driele Rodrigues": {jan:55, fev:59, mar:47, abr:74, mai:84, jun:78, jul:44},
+  "Cida Gomes":       {jan:59, fev:69, mar:58, abr:68, mai:85, jun:69, jul:70},
+  "Júnior Lima":      {jan:55, fev:42, mar:41, abr:62, mai:73, jun:73, jul:61},
+  "Iara Jéssica":    {jan:45, fev:36, mar:70, abr:58, mai:69, jun:77, jul:71},
 };
 
 const VENDAS = {
-  "Pedro Roncalli":   {jan:21, fev:21, mar:16, abr:12, mai:23, jun:20},
-  "Thiago de Brito":  {jan:10, fev:16, mar:11, abr:12, mai:18, jun:25},
-  "Daniele Carvalho": {jan:13, fev:14, mar:22, abr:9,  mai:21, jun:21},
-  "Driele Rodrigues": {jan:16, fev:15, mar:20, abr:11, mai:11, jun:15},
-  "Cida Gomes":       {jan:12, fev:13, mar:14, abr:10, mai:18, jun:14},
+  "Pedro Roncalli":   {jan:21, fev:21, mar:16, abr:12, mai:23, jun:20, jul:21},
+  "Thiago de Brito":  {jan:10, fev:16, mar:11, abr:12, mai:18, jun:25, jul:10},
+  "Daniele Carvalho": {jan:13, fev:14, mar:22, abr:9,  mai:21, jun:21, jul:26},
+  "Driele Rodrigues": {jan:16, fev:15, mar:20, abr:11, mai:11, jun:15, jul:7, jul:11},
+  "Cida Gomes":       {jan:12, fev:13, mar:14, abr:10, mai:18, jun:14, jul:16, jul:14},
   "Júnior Lima":      {jan:9,  fev:11, mar:12, abr:10, mai:12, jun:14},
   "Iara Jéssica":    {jan:13, fev:12, mar:17, abr:6,  mai:10, jun:15},
 };
@@ -199,9 +199,9 @@ const SDRS = [
   "Driele Rodrigues","Cida Gomes","Júnior Lima","Iara Jéssica"
 ];
 
-const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai:"Maio",jun:"Junho"};
-const MONTH_SHORT  = {jan:"Jan",fev:"Fev",mar:"Mar",abr:"Abr",mai:"Mai",jun:"Jun"};
-const MONTH_KEYS   = ["jan","fev","mar","abr","mai","jun"];
+const MONTH_LABELS = {jan:"Janeiro",fev:"Fevereiro",mar:"Março",abr:"Abril",mai:"Maio",jun:"Junho",jul:"Julho"};
+const MONTH_SHORT  = {jan:"Jan",fev:"Fev",mar:"Mar",abr:"Abr",mai:"Mai",jun:"Jun",jul:"Jul"};
+const MONTH_KEYS   = ["jan","fev","mar","abr","mai","jun","jul"];
 
 const KPI_CONFIG = {
   agendamentos: {
